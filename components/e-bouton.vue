@@ -23,11 +23,11 @@ const className = computed(
 <style lang="scss" scoped>
 .button {
   border-style: solid;
-  border-color: blue;
+  border-color: v-bind(couleur);
   border-width: rem(4);
   font-family: $primary-font-familly;
   font-size: $bigger-font-size;
-  color: blue;
+  color: v-bind(couleur);
   padding-top: rem(19);
   padding-bottom: rem(19);
   padding-right: rem(30);
@@ -45,7 +45,7 @@ const className = computed(
 
   &.-dimension {
     box-shadow: 0;
-    box-shadow: 0px 5px 0px blue;
+    box-shadow: 0px 5px 0px v-bind(couleur);
   }
 }
 </style>

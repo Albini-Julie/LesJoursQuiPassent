@@ -1,14 +1,14 @@
 <template>
   <div>
-    <e-bouton>Commencer l’expérience</e-bouton>
+    <e-bouton couleur="red">Commencer l’expérience</e-bouton>
     <br />
     <br />
-    <e-bouton couleur="$winter-secondary-color" size="small"
-      >Commencer l’expérience</e-bouton
+    <e-bouton couleur="red" size="small">Commencer l’expérience</e-bouton>
+    <br />
+    <br />
+    <e-bouton couleur="summer-primary-color" dimension
+      >Commencer l'expérience</e-bouton
     >
-    <br />
-    <br />
-    <e-bouton dimension>Commencer l'expérience</e-bouton>
   </div>
 </template>
 
