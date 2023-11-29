@@ -1,5 +1,11 @@
 <template>
   <div>
-    <NuxtWelcome />
+    <p class="couleur">Bonjour</p>
   </div>
 </template>
+
+<style lang="scss">
+.couleur {
+  color: red;
+}
+</style>
