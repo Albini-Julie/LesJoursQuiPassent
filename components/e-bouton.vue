@@ -32,7 +32,7 @@ const className = computed(
   padding-bottom: rem(19);
   padding-right: rem(30);
   padding-left: rem(30);
-  background-color: none;
+  background-color: transparent;
   border-radius: rem(10);
 
   &.-small {
