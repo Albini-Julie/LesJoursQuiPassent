@@ -1,18 +1,43 @@
 <template>
-  <div>
-    <!--Vidéo-->
-    <div @click="startVideoPlayback">
-      <div ref="videoContainer" class="video-container">
-        <video ref="videoRef">
-          <source :src="videoSource" type="video/mp4" />
-        </video>
-      </div>
+  <!--Vidéo-->
+  <div @click="startVideoPlayback">
+    <div ref="videoContainer" class="video-container">
+      <video ref="videoRef">
+        <source :src="videoSource" type="video/mp4" />
+      </video>
     </div>
+  </div>
+  <div class="intro">
+    <!--Fleur de gauche-->
+    <div>
+      <fleur :couleur="secondaryColor" />
+    </div>
+    <!--Logo-->
+    <div class="e-intro">
+      <logo class="e-intro__logo" :couleur="secondaryColor" />
+      <h2 class="e-intro__title" :style="{ color: secondaryColor }">
+        <apostrophe :couleur="secondaryColor" /> Il est bon de faire confiance
+        au temps qui passe : l'avenir nous révèle toujours ses secrets.
+        <apostrophe :couleur="secondaryColor" />
+      </h2>
+    </div>
+    <!--Fleur de droite-->
+    <div class="e-intro__fleur">
+      <fleur :couleur="secondaryColor" />
+    </div>
+  </div>
+  <div class="e-intro__button">
+    <e-bouton :couleur="secondaryColor">Commencer l'expérience</e-bouton>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted, defineProps } from "vue";
+
+defineProps({
+  primaryColor: String,
+  secondaryColor: String,
+});
 
 export default {
   setup() {
@@ -36,10 +61,59 @@ export default {
       }
     };
 
+    //Fonction pour importer les couleurs selon les saisons
+    const primaryColor = ref("");
+    const secondaryColor = ref("");
+
+    const setColor = () => {
+      const date = new Date();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+
+      if (
+        (month === 12 && day >= 21) ||
+        month === 1 ||
+        month === 2 ||
+        (month === 3 && day < 21)
+      ) {
+        primaryColor.value = "#FFFFFF";
+        secondaryColor.value = "#4359AA";
+      } else if (
+        (month === 3 && day >= 21) ||
+        month === 4 ||
+        (month === 5 && day <= 20) ||
+        (month === 6 && day < 21)
+      ) {
+        primaryColor.value = "#2E3E1A";
+        secondaryColor.value = "#D398EF";
+      } else if (
+        (month === 6 && day >= 21) ||
+        month === 7 ||
+        month === 8 ||
+        (month === 9 && day < 21)
+      ) {
+        primaryColor.value = "#D09C14";
+        secondaryColor.value = "#FFFFFF";
+      } else if (
+        (month === 9 && day >= 21) ||
+        month === 10 ||
+        month === 11 ||
+        (month === 12 && day < 21)
+      ) {
+        primaryColor.value = "#391B0A";
+        secondaryColor.value = "#DE8706";
+      }
+    };
+
     onMounted(() => {
+      setColor();
       // Créer un observateur d'intersection
       observer = new IntersectionObserver(handleIntersection, {
         threshold: [0, 0.5, 1],
+      });
+
+      onUnmounted(() => {
+        setColor();
       });
 
       // Observer l'élément vidéo
@@ -51,12 +125,16 @@ export default {
       videoRef,
       videoSource,
       startVideoPlayback,
+      primaryColor,
+      secondaryColor,
     };
   },
 };
+
+//Fonction pour gérer les couleurs selon les saisons
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .video-container {
   top: 0;
   left: 0;
@@ -73,5 +151,37 @@ video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 115px;
+  @include large-up {
+    gap: 100px;
+  }
+}
+
+.e-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__fleur {
+    transform: rotate(180deg);
+  }
+
+  &__title {
+    font-family: $secondary-font-family;
+    @include large-up {
+      font-size: $giant-font-size;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
 }
 </style>

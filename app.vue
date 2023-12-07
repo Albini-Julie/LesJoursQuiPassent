@@ -1,6 +1,5 @@
 <template>
-  <div :style="{ backgroundColor: secondaryColor }">
-    <h1>Bonjour</h1>
+  <div :style="{ backgroundColor: primaryColor }">
     <NuxtLayout />
   </div>
 </template>
