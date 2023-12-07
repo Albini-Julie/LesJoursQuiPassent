@@ -25,7 +25,7 @@ const className = computed(
   border-style: solid;
   border-color: v-bind(couleur);
   border-width: rem(4);
-  font-family: $primary-font-familly;
+  font-family: $primary-font-family;
   font-size: $bigger-font-size;
   color: v-bind(couleur);
   padding-top: rem(19);
