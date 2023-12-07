@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="e-intro__button">
-    <c-bouton :couleur="secondaryColor" href="/donnees"
+    <c-bouton :couleur="secondaryColor" href="/insert"
       >Commencer l'expérience</c-bouton
     >
   </div>
