@@ -6,11 +6,11 @@ defineProps({
 
 <template>
   <div class="footer">
-    <a class="e-footer__link" href="/mentionslegales"
-      ><p class="e-footer__text">mentions légales</p></a
+    <nuxt-link class="e-footer__link" to="/mentionslegales"
+      ><p class="e-footer__text">mentions légales</p></nuxt-link
     >
-    <a class="e-footer__link" href="/apropos"
-      ><p class="e-footer__text">à propos</p></a
+    <nuxt-link class="e-footer__link" to="/apropos"
+      ><p class="e-footer__text">à propos</p></nuxt-link
     >
   </div>
 </template>

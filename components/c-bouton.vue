@@ -3,6 +3,7 @@ const props = defineProps({
   size: String,
   dimension: Boolean,
   couleur: String,
+  href: String,
 });
 
 //Création d'une constante className qui va retourner un nom de classe différent selon la valeur des propriétés variant, size et icon
@@ -15,9 +16,11 @@ const className = computed(
 </script>
 
 <template>
-  <button class="button" size="small" variant="rounded" :class="className">
-    <slot></slot>
-  </button>
+  <nuxt-link :to="href">
+    <button class="button" size="small" variant="rounded" :class="className">
+      <slot></slot>
+    </button>
+  </nuxt-link>
 </template>
 
 <style lang="scss" scoped>
