@@ -27,7 +27,10 @@
     </div>
   </div>
   <div class="e-intro__button">
-    <e-bouton :couleur="secondaryColor">Commencer l'expérience</e-bouton>
+    <c-bouton :couleur="secondaryColor">Commencer l'expérience</c-bouton>
+  </div>
+  <div>
+    <c-footer class="e-intro__footer" :couleur="secondaryColor" />
   </div>
 </template>
 
@@ -182,6 +185,9 @@ video {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    @include large-up {
+      margin-bottom: 80px;
+    }
   }
 }
 </style>
