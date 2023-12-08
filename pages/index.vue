@@ -3,7 +3,26 @@
   <div @click="startVideoPlayback">
     <div ref="videoContainer" class="video-container">
       <video ref="videoRef">
-        <source :src="videoSource" type="video/mp4" />
+        <source
+          v-if="video == 'winter'"
+          src="/Fleurs_bleues.mp4"
+          type="video/mp4"
+        />
+        <source
+          v-else-if="video == 'spring'"
+          src="/Fleurs_roses.mp4"
+          type="video/mp4"
+        />
+        <source
+          v-else-if="video == 'summer'"
+          src="/FLEURS_BLANCHES.mp4"
+          type="video/mp4"
+        />
+        <source
+          v-else-if="video == 'automn'"
+          src="/Fleurs_marrons.mp4"
+          type="video/mp4"
+        />
       </video>
     </div>
   </div>
@@ -48,7 +67,6 @@ export default {
   setup() {
     const videoContainer = ref(null);
     const videoRef = ref(null);
-    const videoSource = ref("/FLEURS_BLANCHES.mp4");
     let observer;
 
     const handleIntersection = (entries) => {
@@ -69,6 +87,7 @@ export default {
     //Fonction pour importer les couleurs selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
+    const video = ref("");
 
     const setColor = () => {
       const date = new Date();
@@ -83,6 +102,7 @@ export default {
       ) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
+        video.value = "winter";
       } else if (
         (month === 3 && day >= 21) ||
         month === 4 ||
@@ -91,6 +111,7 @@ export default {
       ) {
         primaryColor.value = "#2E3E1A";
         secondaryColor.value = "#D398EF";
+        video.value = "spring";
       } else if (
         (month === 6 && day >= 21) ||
         month === 7 ||
@@ -99,6 +120,7 @@ export default {
       ) {
         primaryColor.value = "#D09C14";
         secondaryColor.value = "#FFFFFF";
+        video.value = "summer";
       } else if (
         (month === 9 && day >= 21) ||
         month === 10 ||
@@ -107,6 +129,7 @@ export default {
       ) {
         primaryColor.value = "#391B0A";
         secondaryColor.value = "#DE8706";
+        video.value = "automn";
       }
     };
 
@@ -128,10 +151,10 @@ export default {
     return {
       videoContainer,
       videoRef,
-      videoSource,
       startVideoPlayback,
       primaryColor,
       secondaryColor,
+      video,
     };
   },
 };
