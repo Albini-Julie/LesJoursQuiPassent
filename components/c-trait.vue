@@ -37,6 +37,9 @@ defineProps({
     font-family: $secondary-font-family;
 
     &.--little {
+      @include only-small {
+        font-size: $big-font-size;
+      }
       font-size: $bigger-font-size;
     }
 
@@ -49,7 +52,13 @@ defineProps({
     border: solid;
     border-bottom: rem(0.1);
     border-color: v-bind(couleur);
-    width: 200px;
+    width: 20px;
+    @include medium-up {
+      width: 100px;
+    }
+    @include large-up {
+      width: 200px;
+    }
   }
 
   &__para {

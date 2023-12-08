@@ -78,15 +78,54 @@ export default {
     <nuxt-link class="e-header__link" to="/"
       ><logo_2 :couleur="secondaryColor"
     /></nuxt-link>
-    <!--Logo de la saison-->
-    <automn v-if="icons === 'automn'" :couleur="secondaryColor" />
-    <spring v-else-if="icons === 'spring'" :couleur="secondaryColor" />
-    <summer v-else-if="icons === 'summer'" :couleur="secondaryColor" />
-    <winter v-else-if="icons === 'winter'" :couleur="secondaryColor" />
+    <!--Logo de la saison en ordi-->
+    <automn
+      class="e-header__icon"
+      v-if="icons === 'automn'"
+      :couleur="secondaryColor"
+    />
+    <spring
+      class="e-header__icon"
+      v-else-if="icons === 'spring'"
+      :couleur="secondaryColor"
+    />
+    <summer
+      class="e-header__icon"
+      v-else-if="icons === 'summer'"
+      :couleur="secondaryColor"
+    />
+    <winter
+      class="e-header__icon"
+      v-else-if="icons === 'winter'"
+      :couleur="secondaryColor"
+    />
     <!--Logo en plus-->
     <croix v-if="croix" :couleur="secondaryColor" />
     <filtre v-else-if="filtre" :couleur="secondaryColor" />
     <croix v-else :couleur="primaryColor" />
+  </div>
+  <div class="e-header__boxicons">
+    <!--Logo de la saison-->
+    <automn
+      class="e-header__icon --phone"
+      v-if="icons === 'automn'"
+      :couleur="secondaryColor"
+    />
+    <spring
+      class="e-header__icon --phone"
+      v-else-if="icons === 'spring'"
+      :couleur="secondaryColor"
+    />
+    <summer
+      class="e-header__icon --phone"
+      v-else-if="icons === 'summer'"
+      :couleur="secondaryColor"
+    />
+    <winter
+      class="e-header__icon --phone"
+      v-else-if="icons === 'winter'"
+      :couleur="secondaryColor"
+    />
   </div>
 </template>
 
@@ -101,6 +140,24 @@ export default {
 .e-header {
   &__link {
     text-decoration: none;
+  }
+
+  &__boxicons {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__icon {
+    display: block;
+    @include only-small {
+      display: none;
+    }
+    &.--phone {
+      display: none;
+      @include only-small {
+        display: block;
+      }
+    }
   }
 }
 </style>

@@ -1,12 +1,15 @@
 <template>
-  <div :style="{ backgroundColor: primaryColor }">
+  <div class="app-container">
     <NuxtLayout />
   </div>
 </template>
 
 <style lang="scss">
-.couleur {
-  background-color: red;
+.app-container {
+  min-height: 100vh;
+  background-color: v-bind(primaryColor);
+  margin: 0;
+  padding: 0;
 }
 </style>
 
