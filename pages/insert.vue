@@ -1,5 +1,5 @@
 <template>
-  <c-header :couleur="secondaryColor" croix="false" filtre="false" />
+  <c-header :couleur="secondaryColor" />
 </template>
 
 <script>
