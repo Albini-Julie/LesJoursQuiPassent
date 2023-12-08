@@ -1,5 +1,5 @@
 <template>
-  <c-header :couleur="secondaryColor" />
+  <c-header :couleur="secondaryColor" filtre />
   <div class="trait">
     <c-trait :couleur="secondaryColor" />
   </div>
@@ -8,7 +8,12 @@
     <input id="userDate" type="text" v-model="selectedDate" class="e-input" />
   </div>
   <div class="button">
-    <c-bouton href="/donnees" :couleur="secondaryColor">Commencer</c-bouton>
+    <c-bouton :couleur="secondaryColor" href="/donnees">Commencer</c-bouton>
+  </div>
+  <div class="button --little">
+    <c-bouton size="small" :couleur="secondaryColor" href="/donnees"
+      >Commencer</c-bouton
+    >
   </div>
   <c-footer :couleur="secondaryColor" />
 </template>
@@ -97,12 +102,18 @@ export default {
 
 .titleh2 {
   font-family: $primary-font-family;
-  font-size: $bigger-font-size;
+  font-size: $big-font-size;
   display: flex;
   justify-content: center;
   color: v-bind(secondaryColor);
+  margin-bottom: 75px;
+  text-align: center;
+  @include medium-up {
+    font-size: $bigger-font-size;
+  }
   @include large-up {
     margin-bottom: 200px;
+    text-align: start;
   }
 }
 
@@ -114,20 +125,35 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: rem(70);
+  display: none;
+  @include medium-up {
+    display: flex;
+  }
+
+  &.--little {
+    display: flex;
+    @include medium-up {
+      display: none;
+    }
+  }
 }
 .e-input {
+  @include only-small {
+    width: 80%;
+  }
   background-color: v-bind(primaryColor);
   border: none;
   border-bottom: solid;
   border-width: 2px;
   border-color: v-bind(secondaryColor);
   font-size: $bigger-font-size;
-  @include large-up {
-    margin-bottom: rem(150);
-  }
+  margin-bottom: rem(100);
   color: v-bind(secondaryColor);
   font-family: $secondary-font-family;
   text-align: center;
+  @include medium-up {
+    margin-bottom: rem(150);
+  }
 
   &:focus {
     outline: none;
