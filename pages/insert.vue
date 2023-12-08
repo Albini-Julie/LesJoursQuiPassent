@@ -4,10 +4,19 @@
     <c-trait :couleur="secondaryColor" />
   </div>
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
+  <input
+    id="userDate"
+    type="text"
+    v-model="selectedDate"
+    placeholder="Sélectionnez une date"
+    class="flatpickr-input"
+  />
 </template>
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
+import flatpickr from "flatpickr";
+import "/flatpickr.min.css";
 
 export default {
   setup() {
@@ -56,6 +65,12 @@ export default {
 
     onMounted(() => {
       setColor();
+      flatpickr("#userDate", {
+        // Options de configuration de flatpickr
+        dateFormat: "Y-m-d", // Format de la date
+        minDate: "1930-01-01", // Date minimale
+        defaultDate: new Date(), // Date par défaut
+      });
     });
 
     onUnmounted(() => {
@@ -64,6 +79,7 @@ export default {
     return {
       primaryColor,
       secondaryColor,
+      selectedDate: "",
     };
   },
 };
@@ -83,5 +99,11 @@ export default {
   display: flex;
   justify-content: center;
   color: v-bind(secondaryColor);
+  @include large-up {
+    margin-bottom: 200px;
+  }
+}
+
+.input {
 }
 </style>
