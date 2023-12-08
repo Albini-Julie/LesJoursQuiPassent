@@ -1,5 +1,9 @@
 <template>
   <c-header :couleur="secondaryColor" />
+  <div class="trait">
+    <c-trait :couleur="secondaryColor" />
+  </div>
+  <h2 class="titleh2">Indiquez votre date de naissance :</h2>
 </template>
 
 <script>
@@ -64,3 +68,20 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.trait {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  margin-bottom: 70px;
+}
+
+.titleh2 {
+  font-family: $primary-font-family;
+  font-size: $bigger-font-size;
+  display: flex;
+  justify-content: center;
+  color: v-bind(secondaryColor);
+}
+</style>
