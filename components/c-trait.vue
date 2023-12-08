@@ -1,6 +1,9 @@
 <script setup>
 defineProps({
   couleur: String,
+  day: String,
+  month: String,
+  year: String,
 });
 </script>
 
@@ -12,8 +15,8 @@ defineProps({
     </div>
     <div class="e-component__point"></div>
     <div class="e-component__para">
-      <div class="e-component__text --little">26 juillet</div>
-      <div class="e-component__text --big">2023</div>
+      <div class="e-component__text --little">{{ day }} {{ month }}</div>
+      <div class="e-component__text --big">{{ year }}</div>
     </div>
     <div class="e-component__point"></div>
     <div>
@@ -38,7 +41,7 @@ defineProps({
 
     &.--little {
       @include only-small {
-        font-size: $big-font-size;
+        font-size: $medium-font-size;
       }
       font-size: $bigger-font-size;
     }

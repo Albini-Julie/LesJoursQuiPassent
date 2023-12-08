@@ -1,7 +1,12 @@
 <template>
-  <c-header :couleur="secondaryColor" filtre />
+  <c-header :couleur="secondaryColor" />
   <div class="trait">
-    <c-trait :couleur="secondaryColor" />
+    <c-trait
+      :couleur="secondaryColor"
+      :day="dayGet"
+      :month="monthF"
+      :year="yearGet"
+    />
   </div>
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
   <div class="input">
@@ -28,6 +33,37 @@ export default {
   setup() {
     const primaryColor = ref("");
     const secondaryColor = ref("");
+    const dateGet = new Date();
+    const dayGet = dateGet.getDate();
+    const monthGet = dateGet.getMonth() + 1;
+    const monthF = ref("");
+    const yearGet = dateGet.getFullYear();
+
+    if (monthGet == 1) {
+      monthF.value = "Janvier";
+    } else if (monthGet == 2) {
+      monthF.value = "Février";
+    } else if (monthGet == 3) {
+      monthF.value = "Mars";
+    } else if (monthGet == 4) {
+      monthF.value = "Avril";
+    } else if (monthGet == 5) {
+      monthF.value = "Mai";
+    } else if (monthGet == 6) {
+      monthF.value = "Juin";
+    } else if (monthGet == 7) {
+      monthF.value = "Juillet";
+    } else if (monthGet == 8) {
+      monthF.value = "Août";
+    } else if (monthGet == 9) {
+      monthF.value = "Septembre";
+    } else if (monthGet == 10) {
+      monthF.value = "Octobre";
+    } else if (monthGet == 11) {
+      monthF.value = "Novembre";
+    } else {
+      monthF.value = "Décembre";
+    }
 
     const setColor = () => {
       const date = new Date();
@@ -87,6 +123,9 @@ export default {
       primaryColor,
       secondaryColor,
       selectedDate: "",
+      dayGet,
+      monthF,
+      yearGet,
     };
   },
 };
