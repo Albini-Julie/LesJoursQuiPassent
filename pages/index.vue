@@ -182,23 +182,22 @@ export default {
 }
 
 video {
-  @include large-up {
+  @include x-large-up {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  max-width: fit-content;
 }
 
 .intro {
   display: flex;
-  @include only-small {
-    flex-wrap: wrap;
-  }
   justify-content: space-between;
   padding-top: 115px;
-  @include large-up {
+  flex-wrap: wrap;
+  @include x-large-up {
     gap: 100px;
+    display: flex;
+    flex-wrap: nowrap;
   }
 }
 
@@ -212,22 +211,40 @@ video {
     @include large-up {
       display: block;
     }
+    @include x-large-up {
+      display: block;
+    }
     &.--rotate {
       transform: rotate(180deg);
+      @include large-up {
+        display: none;
+      }
+      @include x-large-up {
+        display: block;
+      }
     }
   }
 
   &__title {
     font-family: $secondary-font-family;
+    text-align: center;
+    font-size: $big-font-size;
+    margin-right: rem(20);
+    margin-left: rem(20);
+    margin-top: rem(120);
+    width: 80%;
+    @include medium-up {
+      font-size: $bigger-font-size;
+    }
     @include large-up {
       font-size: $giant-font-size;
     }
-    @include only-small {
-      text-align: center;
-      font-size: $big-font-size;
-      margin-right: rem(20);
-      margin-left: rem(20);
-      margin-top: rem(120);
+    @include x-large-up {
+      font-size: $giant-font-size;
+      text-align: start;
+      margin-right: 0;
+      margin-left: 0;
+      width: 100%;
     }
   }
 
@@ -236,14 +253,14 @@ video {
     margin-top: 30px;
     margin-bottom: 80px;
     display: none;
-    @include large-up {
+    @include medium-up {
       display: flex;
     }
 
     &.--little {
-      display: none;
-      @include only-small {
-        display: flex;
+      display: flex;
+      @include medium-up {
+        display: none;
       }
     }
   }
@@ -252,6 +269,12 @@ video {
     @include only-small {
       width: rem(30);
       height: rem(30);
+    }
+  }
+
+  &__logo {
+    @include large-up {
+      margin-top: rem(50);
     }
   }
 }
