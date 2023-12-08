@@ -4,19 +4,20 @@
     <c-trait :couleur="secondaryColor" />
   </div>
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
-  <input
-    id="userDate"
-    type="text"
-    v-model="selectedDate"
-    placeholder="Sélectionnez une date"
-    class="flatpickr-input"
-  />
+  <div class="input">
+    <input id="userDate" type="text" v-model="selectedDate" class="e-input" />
+  </div>
+  <div class="button">
+    <c-bouton href="/donnees" :couleur="secondaryColor">Commencer</c-bouton>
+  </div>
+  <c-footer :couleur="secondaryColor" />
 </template>
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
 import flatpickr from "flatpickr";
 import "/flatpickr.min.css";
+import { French } from "flatpickr/dist/l10n/fr.js";
 
 export default {
   setup() {
@@ -67,9 +68,10 @@ export default {
       setColor();
       flatpickr("#userDate", {
         // Options de configuration de flatpickr
-        dateFormat: "Y-m-d", // Format de la date
+        dateFormat: "d F Y", // Format de la date
         minDate: "1930-01-01", // Date minimale
         defaultDate: new Date(), // Date par défaut
+        locale: French,
       });
     });
 
@@ -105,5 +107,30 @@ export default {
 }
 
 .input {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: rem(70);
+}
+.e-input {
+  background-color: v-bind(primaryColor);
+  border: none;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: v-bind(secondaryColor);
+  font-size: $bigger-font-size;
+  @include large-up {
+    margin-bottom: rem(150);
+  }
+  color: v-bind(secondaryColor);
+  font-family: $secondary-font-family;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>
