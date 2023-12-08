@@ -29,6 +29,7 @@ defineProps({
     font-family: $primary-font-family;
     font-size: $small-font-size;
     margin: 0px;
+    font-weight: 800;
   }
 
   &__link {
