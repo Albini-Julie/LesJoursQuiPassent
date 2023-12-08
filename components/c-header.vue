@@ -1,35 +1,13 @@
-<template>
-  <div class="header">
-    <!--Logo du site-->
-    <logo_2 :couleur="secondaryColor" />
-    <!--Logo de la saison-->
-    <automn v-if="icons === 'automn'" :couleur="secondaryColor" />
-    <spring v-else-if="icons === 'spring'" :couleur="secondaryColor" />
-    <summer v-else-if="icons === 'summer'" :couleur="secondaryColor" />
-    <winter v-else-if="icons === 'winter'" :couleur="secondaryColor" />
-    <!--Logo en plus-->
-    <croix v-if="filtre === false && croix === false" :couleur="primaryColor" />
-    <croix
-      v-if="filtre === false && croix === true"
-      :couleur="secondaryColor"
-    />
-    <filtre
-      v-if="filtre === true && croix === true"
-      :couleur="secondaryColor"
-    />
-  </div>
-</template>
-
 <script>
 import { ref, onMounted, onUnmounted, defineProps } from "vue";
 
-defineProps({
-  filtre: Boolean,
-  croix: Boolean,
-});
-
 export default {
-  setup() {
+  props: {
+    filtre: Boolean,
+    croix: Boolean,
+  },
+
+  setup(props) {
     const primaryColor = ref("");
     const secondaryColor = ref("");
     const icons = ref("");
@@ -94,10 +72,35 @@ export default {
 };
 </script>
 
+<template>
+  <div class="header">
+    <!--Logo du site-->
+    <nuxt-link class="e-header__link" to="/"
+      ><logo_2 :couleur="secondaryColor"
+    /></nuxt-link>
+    <!--Logo de la saison-->
+    <automn v-if="icons === 'automn'" :couleur="secondaryColor" />
+    <spring v-else-if="icons === 'spring'" :couleur="secondaryColor" />
+    <summer v-else-if="icons === 'summer'" :couleur="secondaryColor" />
+    <winter v-else-if="icons === 'winter'" :couleur="secondaryColor" />
+    <!--Logo en plus-->
+    <croix v-if="croix" :couleur="secondaryColor" />
+    <filtre v-else-if="filtre" :couleur="secondaryColor" />
+    <croix v-else :couleur="primaryColor" />
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .header {
   display: flex;
   justify-content: space-between;
   padding: rem(25);
+  align-items: center;
+}
+
+.e-header {
+  &__link {
+    text-decoration: none;
+  }
 }
 </style>
