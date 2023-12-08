@@ -28,25 +28,31 @@
   </div>
   <div class="intro">
     <!--Fleur de gauche-->
-    <div>
+    <div class="e-intro__fleur">
       <fleur :couleur="secondaryColor" />
     </div>
     <!--Logo-->
     <div class="e-intro">
       <logo class="e-intro__logo" :couleur="secondaryColor" />
       <h2 class="e-intro__title" :style="{ color: secondaryColor }">
-        <apostrophe :couleur="secondaryColor" /> Il est bon de faire confiance
-        au temps qui passe : l'avenir nous révèle toujours ses secrets.
-        <apostrophe :couleur="secondaryColor" />
+        <apostrophe class="e-intro__apo" :couleur="secondaryColor" /> Il est bon
+        de faire confiance au temps qui passe : l'avenir nous révèle toujours
+        ses secrets.
+        <apostrophe class="e-intro__apo" :couleur="secondaryColor" />
       </h2>
     </div>
     <!--Fleur de droite-->
-    <div class="e-intro__fleur">
+    <div class="e-intro__fleur --rotate">
       <fleur :couleur="secondaryColor" />
     </div>
   </div>
   <div class="e-intro__button">
     <c-bouton :couleur="secondaryColor" href="/insert"
+      >Commencer l'expérience</c-bouton
+    >
+  </div>
+  <div class="e-intro__button --little">
+    <c-bouton size="small" :couleur="secondaryColor" href="/insert"
       >Commencer l'expérience</c-bouton
     >
   </div>
@@ -176,13 +182,19 @@ export default {
 }
 
 video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  @include large-up {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  max-width: fit-content;
 }
 
 .intro {
   display: flex;
+  @include only-small {
+    flex-wrap: wrap;
+  }
   justify-content: space-between;
   padding-top: 115px;
   @include large-up {
@@ -196,7 +208,13 @@ video {
   align-items: center;
 
   &__fleur {
-    transform: rotate(180deg);
+    display: none;
+    @include large-up {
+      display: block;
+    }
+    &.--rotate {
+      transform: rotate(180deg);
+    }
   }
 
   &__title {
@@ -204,14 +222,36 @@ video {
     @include large-up {
       font-size: $giant-font-size;
     }
+    @include only-small {
+      text-align: center;
+      font-size: $big-font-size;
+      margin-right: rem(20);
+      margin-left: rem(20);
+      margin-top: rem(120);
+    }
   }
 
   &__button {
-    display: flex;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 80px;
+    display: none;
     @include large-up {
-      margin-bottom: 80px;
+      display: flex;
+    }
+
+    &.--little {
+      display: none;
+      @include only-small {
+        display: flex;
+      }
+    }
+  }
+
+  &__apo {
+    @include only-small {
+      width: rem(30);
+      height: rem(30);
     }
   }
 }
