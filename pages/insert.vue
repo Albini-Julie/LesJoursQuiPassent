@@ -13,10 +13,15 @@
     <input id="userDate" type="text" v-model="selectedDate" class="e-input" />
   </div>
   <div class="button">
-    <c-bouton :couleur="secondaryColor" href="/donnees">Commencer</c-bouton>
+    <c-bouton :couleur="secondaryColor" :href="`/dates/${selectedDate}`"
+      >Commencer</c-bouton
+    >
   </div>
   <div class="button --little">
-    <c-bouton size="small" :couleur="secondaryColor" href="/donnees"
+    <c-bouton
+      size="small"
+      :couleur="secondaryColor"
+      @click="start(this.selectedDate)"
       >Commencer</c-bouton
     >
   </div>
@@ -30,7 +35,21 @@ import "/flatpickr.min.css";
 import { French } from "flatpickr/dist/l10n/fr.js";
 
 export default {
+  data() {
+    return {
+      selectedDate: "",
+    };
+  },
   setup() {
+    //redirection vers la page de la date
+    function redirectToDatesPage() {
+      console.log(selectedDate);
+      const url = `/dates/${this.selectedDate}`;
+      // Effectuer la redirection
+      console.log("Redirection vers:", url);
+      // Vous pouvez utiliser la méthode de redirection appropriée pour votre application
+    }
+
     const primaryColor = ref("");
     const secondaryColor = ref("");
     const dateGet = new Date();
@@ -126,6 +145,7 @@ export default {
       dayGet,
       monthF,
       yearGet,
+      redirectToDatesPage,
     };
   },
 };

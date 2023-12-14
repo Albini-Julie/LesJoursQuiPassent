@@ -1,5 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  routes: [
+    {
+      path: '/pages/dates/:date',
+      component: '~/pages/dates/_date.vue',
+    },
+  ],
   head: {
       link: [
         {
