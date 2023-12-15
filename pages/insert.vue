@@ -28,7 +28,7 @@
     <c-bouton
       size="small"
       :couleur="secondaryColor"
-      @click="start(this.selectedDate)"
+      @click="redirectToDatesPage(selectedDate)"
       >Commencer</c-bouton
     >
   </div>
@@ -37,9 +37,6 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
-import flatpickr from "flatpickr";
-import "/flatpickr.min.css";
-import { French } from "flatpickr/dist/l10n/fr.js";
 
 export default {
   setup() {
@@ -99,7 +96,7 @@ export default {
       return isDateValid && isYearValid;
     }
 
-    // Exemple d'utilisation
+    // Couleur Secondary et Primary selon les saisons
 
     const primaryColor = ref("");
     const secondaryColor = ref("");
@@ -177,13 +174,6 @@ export default {
 
     onMounted(() => {
       setColor();
-      flatpickr("#userDate", {
-        // Options de configuration de flatpickr
-        dateFormat: "d F Y", // Format de la date
-        minDate: "1930-01-01", // Date minimale
-        defaultDate: new Date(), // Date par défaut
-        locale: French,
-      });
     });
 
     onUnmounted(() => {
