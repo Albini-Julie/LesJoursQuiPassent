@@ -9,8 +9,9 @@ export default {
       dateFromURL: null,
     };
   },
-  // Couleur Secondary et Primary selon les saisons
+
   setup() {
+    // Couleur Secondary et Primary selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
     const dateGet = new Date();
@@ -186,6 +187,13 @@ export default {
     <p>{{ apodData.explanation }}</p>
     <img :src="apodData.url" alt="NASA APOD" />
   </div>
+  <c-timer
+    :year="yearFromURL"
+    :day="dayFromURL"
+    :month="monthFromURL_before"
+    :couleur="secondaryColor"
+    class="e-id__timer"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -195,6 +203,17 @@ export default {
     justify-content: center;
     margin-top: 60px;
     margin-bottom: 70px;
+  }
+
+  &__timer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: rem(10);
+    margin-right: rem(10);
+    @include x-large-up {
+      margin: 0px;
+    }
   }
 }
 </style>
