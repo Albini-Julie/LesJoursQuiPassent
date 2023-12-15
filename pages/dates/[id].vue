@@ -182,11 +182,7 @@ export default {
       :month="monthFromURL"
     />
   </div>
-  <div v-if="apodData">
-    <h3>{{ apodData.title }}</h3>
-    <p>{{ apodData.explanation }}</p>
-    <img :src="apodData.url" alt="NASA APOD" />
-  </div>
+  <!--Timer-->
   <c-timer
     :year="yearFromURL"
     :day="dayFromURL"
@@ -194,7 +190,35 @@ export default {
     :couleur="secondaryColor"
     class="e-id__timer"
   />
-  <c-age :birthYear="yearFromURL" :couleur="secondaryColor" class="e-id__age" />
+  <!--Fleurs de filtrage-->
+  <div class="e-id__fleurs">
+    <div class="e-id__fleurs --semieronde2">
+      <fleur_semieronde2 :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --pointue">
+      <fleur_pointue :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --semieronde">
+      <fleur_semieronde :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --ronde">
+      <fleur_ronde :couleur="secondaryColor" />
+    </div>
+  </div>
+  <!--Picture of the day-->
+  <div v-if="apodData">
+    <h3>{{ apodData.title }}</h3>
+    <p>{{ apodData.explanation }}</p>
+    <img :src="apodData.url" alt="NASA APOD" />
+  </div>
+  <!--Calculateur d'âge-->
+  <c-age
+    :birthYear="yearFromURL"
+    :birthMonth="monthFromURL_before"
+    :couleur="secondaryColor"
+    class="e-id__age"
+  />
+  <c-footer :couleur="secondaryColor" class="e-id__footer" />
 </template>
 
 <style lang="scss" scoped>
@@ -224,6 +248,97 @@ export default {
     @include large-up {
       margin-top: 100px;
     }
+  }
+
+  &__fleurs {
+    justify-content: center;
+    margin-top: rem(60);
+    gap: rem(33);
+    display: none;
+    @include medium-up {
+      display: flex;
+    }
+
+    &.--semieronde2:hover::before {
+      /* Afficher le message au survol */
+      content: "Sport";
+      display: block;
+      position: absolute;
+      background-color: v-bind(primaryColor);
+      color: v-bind(secondaryColor);
+      border: solid;
+      border-width: rem(1);
+      border-color: v-bind(secondaryColor);
+      font-family: $primary-font-family;
+      font-weight: 500;
+      padding: 5px;
+      border-radius: 5px;
+      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-left: 10px;
+      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      margin-top: rem(-40);
+    }
+    &.--semieronde:hover::before {
+      /* Afficher le message au survol */
+      content: "Cinéma";
+      display: block;
+      position: absolute;
+      background-color: v-bind(primaryColor);
+      color: v-bind(secondaryColor);
+      border: solid;
+      border-width: rem(1);
+      border-color: v-bind(secondaryColor);
+      font-family: $primary-font-family;
+      font-weight: 500;
+      padding: 5px;
+      border-radius: 5px;
+      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-left: 10px;
+      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      margin-top: rem(-40);
+    }
+    &.--ronde:hover::before {
+      /* Afficher le message au survol */
+      content: "Musique";
+      display: block;
+      position: absolute;
+      background-color: v-bind(primaryColor);
+      color: v-bind(secondaryColor);
+      border: solid;
+      border-width: rem(1);
+      border-color: v-bind(secondaryColor);
+      font-family: $primary-font-family;
+      font-weight: 500;
+      padding: 5px;
+      border-radius: 5px;
+      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-left: 10px;
+      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      margin-top: rem(-40);
+    }
+    &.--pointue:hover::before {
+      /* Afficher le message au survol */
+      content: "Histoire";
+      display: block;
+      position: absolute;
+      background-color: v-bind(primaryColor);
+      color: v-bind(secondaryColor);
+      border: solid;
+      border-width: rem(1);
+      border-color: v-bind(secondaryColor);
+      font-family: $primary-font-family;
+      font-weight: 500;
+      padding: 5px;
+      border-radius: 5px;
+      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-left: 10px;
+      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      margin-top: rem(-40);
+    }
+  }
+
+  &__footer {
+    margin-top: rem(20);
   }
 }
 </style>

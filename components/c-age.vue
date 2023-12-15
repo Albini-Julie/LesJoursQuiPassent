@@ -14,21 +14,31 @@ export default {
       type: Number,
       required: true,
     },
+    birthMonth: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
       currentYear: new Date().getFullYear(),
+      currentMonth: new Date().getMonth(),
       age: 0,
     };
   },
   computed: {
     calculateAge() {
-      return this.currentYear - this.birthYear;
+      const monthDifference = this.currentMonth - this.birthMonth;
+      const age = this.currentYear - this.birthYear;
+
+      return monthDifference < 0 ? age - 1 : age;
     },
   },
   watch: {
     birthYear: "updateAge",
+    birthMonth: "updateAge",
     currentYear: "updateAge",
+    currentMonth: "updateAge",
   },
   methods: {
     updateAge() {
