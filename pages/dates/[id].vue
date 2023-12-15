@@ -213,8 +213,9 @@ export default {
   </div>
   <!--Calculateur d'âge-->
   <c-age
-    :birthYear="yearFromURL"
-    :birthMonth="monthFromURL_before"
+    :year="yearFromURL"
+    :month="monthFromURL_before"
+    :day="dayFromURL"
     :couleur="secondaryColor"
     class="e-id__age"
   />
