@@ -10,10 +10,17 @@
   </div>
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
   <div class="input">
-    <input id="userDate" type="text" v-model="selectedDate" class="e-input" />
+    <input
+      type="text"
+      v-model="selectedDate"
+      class="e-input"
+      placeholder="année-mois-jour"
+    />
   </div>
   <div class="button">
-    <c-bouton :couleur="secondaryColor" :href="`/dates/${selectedDate}`"
+    <c-bouton
+      :couleur="secondaryColor"
+      @click="redirectToDatesPage(selectedDate)"
       >Commencer</c-bouton
     >
   </div>
@@ -35,20 +42,64 @@ import "/flatpickr.min.css";
 import { French } from "flatpickr/dist/l10n/fr.js";
 
 export default {
-  data() {
-    return {
-      selectedDate: "",
-    };
-  },
   setup() {
     //redirection vers la page de la date
-    function redirectToDatesPage() {
-      console.log(selectedDate);
-      const url = `/dates/${this.selectedDate}`;
-      // Effectuer la redirection
-      console.log("Redirection vers:", url);
-      // Vous pouvez utiliser la méthode de redirection appropriée pour votre application
+    function redirectToDatesPage(date) {
+      console.log(date);
+      const userInput = date; // Remplacez cela par la valeur de votre champ de saisie
+      if (isValidDate(userInput)) {
+        const url = `/dates/${date}`;
+        // Effectuer la redirection
+        window.location.href = url;
+      } else {
+        // Fenêtre d'alerte personnalisée
+        const errorMessage = "La date n'est pas valide.";
+        const alertStyle = "background-color: #8B0000; color: #FFFFFF;";
+
+        // Afficher la fenêtre d'alerte personnalisée
+        showAlert(errorMessage, alertStyle);
+      }
     }
+
+    function showAlert(message, style) {
+      const alertContainer = document.createElement("div");
+      alertContainer.style = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    border-radius: 5px;
+    font-family: Urbanist;
+    ${style}`;
+
+      const alertMessage = document.createElement("p");
+      alertMessage.textContent = message;
+
+      alertContainer.appendChild(alertMessage);
+      document.body.appendChild(alertContainer);
+
+      // Supprimer la fenêtre d'alerte après un certain délai (par exemple, 3 secondes)
+      setTimeout(() => {
+        document.body.removeChild(alertContainer);
+      }, 3000);
+    }
+
+    function isValidDate(dateString) {
+      const dateObject = new Date(dateString);
+
+      // Vérifier si la conversion a réussi et que la date reste valide
+      const isDateValid = !isNaN(dateObject.getTime());
+
+      // Vérifier si l'année est entre 1930 et l'année actuelle
+      const isYearValid =
+        dateObject.getFullYear() >= 1930 &&
+        dateObject.getFullYear() <= new Date().getFullYear();
+
+      return isDateValid && isYearValid;
+    }
+
+    // Exemple d'utilisation
 
     const primaryColor = ref("");
     const secondaryColor = ref("");
@@ -179,6 +230,12 @@ export default {
 .input {
   display: flex;
   justify-content: center;
+
+  ::placeholder {
+    font-family: $primary-font-family;
+    color: v-bind(secondaryColor);
+    opacity: 0.4;
+  }
 }
 .button {
   display: flex;
