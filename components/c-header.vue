@@ -100,9 +100,17 @@ export default {
       :couleur="secondaryColor"
     />
     <!--Logo en plus-->
-    <croix v-if="croix" :couleur="secondaryColor" />
-    <filtre v-else-if="filtre" :couleur="secondaryColor" />
-    <croix v-else :couleur="primaryColor" />
+    <croix
+      v-if="croix"
+      class="e-header__icon --phone"
+      :couleur="secondaryColor"
+    />
+    <filtre
+      v-else-if="filtre"
+      class="e-header__icon --phone"
+      :couleur="secondaryColor"
+    />
+    <croix :couleur="primaryColor" class="e-header__icon" />
   </div>
   <div class="e-header__boxicons">
     <!--Logo de la saison-->
