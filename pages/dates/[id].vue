@@ -194,6 +194,7 @@ export default {
     :couleur="secondaryColor"
     class="e-id__timer"
   />
+  <c-age :birthYear="yearFromURL" :couleur="secondaryColor" class="e-id__age" />
 </template>
 
 <style lang="scss" scoped>
@@ -213,6 +214,15 @@ export default {
     margin-right: rem(10);
     @include x-large-up {
       margin: 0px;
+    }
+  }
+
+  &__age {
+    margin-top: 130px;
+    display: flex;
+    justify-content: center;
+    @include large-up {
+      margin-top: 100px;
     }
   }
 }
