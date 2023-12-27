@@ -4,13 +4,19 @@
       <croix @click="retourPagePrecedente" :couleur="secondaryColor" />
     </div>
     <!--Title-->
-    <div class="e-mentions__title">
-      <h2>Mentions légales</h2>
+    <div class="e-mentions__Blocktitle">
+      <h2 class="e-mentions__title">Mentions légales</h2>
     </div>
+    <!--Petites fleurs mobles-->
+    <div class="e-mentions__littleFlower">
+      <FleurSemieronde :couleur="secondaryColor" />
+      <FleurRonde :couleur="secondaryColor" />
+    </div>
+
     <!--Partie 1 (content 1 + fleur 1)-->
     <div class="e-mentions__content">
       <!--Flower desktop-->
-      <GiantFlower2 class="e-mentions__flower" :couleur="secondaryColor" />
+      <GiantFlower2 class="e-mentions__flower --2" :couleur="secondaryColor" />
       <!--Text-->
       <div class="e-mentions__Blocktext">
         <p class="e-mentions__Contenttext">[Adresse de votre site web]</p>
@@ -46,10 +52,10 @@
     </div>
 
     <!--Partie 2 (Content 2 et fleur 2)-->
-    <div class="e-mentions__content">
+    <div class="e-mentions__content --2">
       <!--Text-->
       <div class="e-mentions__Blocktext --2">
-        <p class="e-mentions__Contenttext">
+        <p class="e-mentions__Contenttext --top">
           Collecte et Utilisation des Données Personnelles :
         </p>
         <p class="e-mentions__Contenttext">
@@ -58,12 +64,12 @@
           personnelles.
         </p>
         <p class="e-mentions__Contenttext">Liens Externes :</p>
-        <p class="e-mentions__Contenttext">
+        <p class="e-mentions__Contenttext --top">
           Ce site web peut contenir des liens vers des sites tiers. Les jours
           qui passent n’assume aucune responsabilité quant au contenu ou aux
           pratiques de confidentialité de ces sites tiers.
         </p>
-        <p class="e-mentions__Contenttext">Responsabilité :</p>
+        <p class="e-mentions__Contenttext --top">Responsabilité :</p>
         <p class="e-mentions__Contenttext">
           Bien que nous nous efforçons de fournir des informations précises et à
           jour, Les jours qui passent ne garantit pas l’exactitude ni
@@ -71,15 +77,15 @@
           décline toute responsabilité pour tout dommage résultant de
           l’utilisation de ce site web.
         </p>
-        <p class="e-mentions__Contenttext">
+        <p class="e-mentions__Contenttext --top">
           Modification des Mentions Légales :
         </p>
-        <p class="e-mentions__Contenttext">
+        <p class="e-mentions__Contenttext --top">
           Les jours qui passent se réserve le droit de modifier ces mentions
           légales à tout moment. Les utilisateurs sont encouragés à consulter
           régulièrement cette page pour rester informés des mises à jour.
         </p>
-        <p class="e-mentions__Contenttext">Contact :</p>
+        <p class="e-mentions__Contenttext --top">Contact :</p>
         <p class="e-mentions__Contenttext">
           Pour toute question ou demande de renseignements concernant ces
           mentions légales, veuillez nous contacter à
@@ -90,6 +96,10 @@
       <GiantFlower class="e-mentions__flower" :couleur="secondaryColor" />
     </div>
 
+    <div class="e-mentions__littleFlower">
+      <FleurSemieronde2 :couleur="secondaryColor" />
+      <FleurPointue :couleur="secondaryColor" />
+    </div>
     <!--Footer-->
     <c-footer class="e-mentions__footer" :couleur="secondaryColor" />
   </div>
@@ -168,17 +178,25 @@ export default {
 
 <style lang="scss" scoped>
 .e-mentions {
-  &__title {
+  &__Blocktitle {
     font-family: $primary-font-family;
-    font-size: $bigger-font-size;
+    font-size: $big-font-size;
     color: v-bind(secondaryColor);
     display: flex;
     justify-content: center;
+    text-align: center;
     @include medium-up {
-      font-size: $giant-font-size;
+      font-size: $bigger-font-size;
     }
     @include large-up {
       font-size: $giant-font-size;
+    }
+  }
+
+  &__title {
+    margin-bottom: 0px;
+    @include large-up {
+      margin-bottom: rem(40);
     }
   }
 
@@ -188,7 +206,10 @@ export default {
     color: v-bind(secondaryColor);
     display: flex;
     justify-content: center;
+    margin-left: rem(20);
+    margin-right: rem(20);
     @include medium-up {
+      margin: rem(0);
     }
     @include large-up {
       width: 50%;
@@ -204,34 +225,19 @@ export default {
       justify-content: space-between;
       margin-top: rem(50);
     }
-  }
 
-  &__flower {
-    display: none;
-    @include large-up {
-      display: block;
-      width: 30%;
-      height: 30%;
-    }
-    @include x-large-up {
-      width: auto;
-      height: auto;
+    &.--2 {
+      align-items: center;
     }
   }
 
   &__footer {
-    margin-top: rem(50);
     @include medium-up {
       margin-top: rem(70);
     }
     @include x-large-up {
       margin-top: rem(80);
     }
-  }
-
-  &__blockFlower {
-    display: flex;
-    justify-content: end;
   }
 
   &__header {
@@ -252,16 +258,64 @@ export default {
     font-family: $primary-font-family;
     font-size: $regular-font-size;
     color: v-bind(secondaryColor);
-    width: 55%;
-    margin-right: rem(200);
+    margin-right: rem(20);
+    margin-left: rem(20);
+    @include large-up {
+      margin-right: rem(100);
+      margin-left: rem(0);
+      width: 55%;
+    }
+    @include x-large-up {
+      margin-right: rem(200);
+      margin-left: rem(0);
+    }
 
     &.--2 {
-      margin-left: rem(200);
+      @include large-up {
+        margin-left: rem(100);
+        margin-top: rem(40);
+      }
+      @include x-large-up {
+        margin-left: rem(200);
+        margin-top: rem(0);
+      }
     }
   }
 
   &__Contenttext {
     margin: 0px;
+
+    &.--top {
+      margin-top: rem(20);
+    }
+  }
+
+  &__flower {
+    display: none;
+    @include large-up {
+      display: block;
+      width: 30%;
+      height: 30%;
+    }
+    &.--2 {
+      width: 20%;
+      height: 20%;
+      @include large-up {
+        width: 20%;
+        height: 20%;
+      }
+    }
+  }
+
+  &__littleFlower {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(50);
+    margin-bottom: rem(50);
+    gap: rem(10);
+    @include large-up {
+      display: none;
+    }
   }
 }
 </style>
