@@ -6,6 +6,13 @@
       <h2>À propos</h2>
     </div>
     <div class="e-propos__content">
+      <!--Flower mobile-->
+      <div class="e-propos__blockFlower">
+        <GiantFlower
+          class="e-propos__flower --mobile"
+          :couleur="secondaryColor"
+        />
+      </div>
       <!--Text-->
       <p class="e-propos__text">
         Le projet « Les Jours qui Passent » se concentre sur une fusion
@@ -20,11 +27,11 @@
         comment il peut transformer une simple date de naissance en une
         expérience profondément poétique et enrichissante.
       </p>
-      <!--Flower-->
-      <GiantFlower :couleur="secondaryColor" />
+      <!--Flower desktop-->
+      <GiantFlower class="e-propos__flower" :couleur="secondaryColor" />
     </div>
     <!--Footer-->
-    <c-footer :couleur="secondaryColor" />
+    <c-footer class="e-propos__footer" :couleur="secondaryColor" />
   </div>
 </template>
 
@@ -95,31 +102,86 @@ export default {
 .e-propos {
   &__title {
     font-family: $primary-font-family;
-    font-size: $giant-font-size;
+    font-size: $bigger-font-size;
     color: v-bind(secondaryColor);
     display: flex;
     justify-content: center;
+    @include medium-up {
+      font-size: $bigger-font-size;
+    }
+    @include large-up {
+      font-size: $giant-font-size;
+    }
   }
 
   &__text {
     font-family: $primary-font-family;
     font-size: $regular-font-size;
     color: v-bind(secondaryColor);
-    width: 50%;
     display: flex;
     justify-content: center;
-    margin-left: rem(10);
+    margin-left: rem(20);
+    margin-right: rem(20);
+    @include medium-up {
+      margin-left: rem(80);
+      margin-right: rem(80);
+    }
     @include large-up {
+      margin-left: rem(100);
+      width: 50%;
+      margin-right: rem(0);
+    }
+    @include x-large-up {
       margin-left: rem(200);
     }
   }
 
   &__content {
-    display: flex;
-    justify-content: space-between;
+    display: block;
     @include large-up {
+      display: flex;
+      justify-content: space-between;
       margin-top: rem(50);
     }
+  }
+
+  &__flower {
+    display: none;
+    @include large-up {
+      display: block;
+      width: 30%;
+      height: 30%;
+    }
+    @include x-large-up {
+      width: auto;
+      height: auto;
+    }
+
+    &.--mobile {
+      display: flex;
+      justify-content: end;
+      height: 50%;
+      width: 50%;
+      @include medium-up {
+        height: 40%;
+        width: 40%;
+      }
+      @include large-up {
+        display: none;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: rem(50);
+    @include x-large-up {
+      margin-top: rem(20);
+    }
+  }
+
+  &__blockFlower {
+    display: flex;
+    justify-content: end;
   }
 }
 </style>
