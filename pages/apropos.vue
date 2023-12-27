@@ -1,6 +1,8 @@
 <template>
   <div class="e-propos">
-    <c-header :couleur="secondaryColor" />
+    <div class="e-propos__header">
+      <croix @click="retourPagePrecedente" :couleur="secondaryColor" />
+    </div>
     <!--Title-->
     <div class="e-propos__title">
       <h2>À propos</h2>
@@ -37,11 +39,13 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   setup() {
     const primaryColor = ref("");
     const secondaryColor = ref("");
+    const router = useRouter();
 
     const setColor = () => {
       const date = new Date();
@@ -83,6 +87,10 @@ export default {
       }
     };
 
+    const retourPagePrecedente = () => {
+      router.go(-1);
+    };
+
     onMounted(() => {
       setColor();
     });
@@ -90,9 +98,11 @@ export default {
     onUnmounted(() => {
       setColor();
     });
+
     return {
       primaryColor,
       secondaryColor,
+      retourPagePrecedente,
     };
   },
 };
@@ -127,11 +137,12 @@ export default {
       margin-right: rem(80);
     }
     @include large-up {
-      margin-left: rem(100);
-      width: 50%;
+      margin-left: rem(40);
+      width: 55%;
       margin-right: rem(0);
     }
     @include x-large-up {
+      width: 50%;
       margin-left: rem(200);
     }
   }
@@ -174,6 +185,9 @@ export default {
 
   &__footer {
     margin-top: rem(50);
+    @include medium-up {
+      margin-top: rem(70);
+    }
     @include x-large-up {
       margin-top: rem(20);
     }
@@ -182,6 +196,17 @@ export default {
   &__blockFlower {
     display: flex;
     justify-content: end;
+  }
+
+  &__header {
+    margin-right: rem(25);
+    margin-top: rem(25);
+    display: flex;
+    justify-content: end;
+    @include medium-up {
+      margin-right: rem(50);
+      margin-top: rem(50);
+    }
   }
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup>
 defineProps({
-  couleur1: String,
-  couleur2: String,
+  couleur: String,
 });
 </script>
 
