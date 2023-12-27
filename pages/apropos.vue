@@ -117,7 +117,7 @@ export default {
     display: flex;
     justify-content: center;
     @include medium-up {
-      font-size: $bigger-font-size;
+      font-size: $giant-font-size;
     }
     @include large-up {
       font-size: $giant-font-size;
