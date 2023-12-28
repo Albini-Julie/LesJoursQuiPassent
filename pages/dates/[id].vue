@@ -49,11 +49,12 @@
 
   <!--Fenetre des filtres-->
   <div
-    class="e-filter"
+    class="invisible"
     :class="{
+      efilter: isFilterOpen(),
       visible: isFilterOpen(),
       animation: isFilterOpen(),
-      inverse: !isFilterOpen(),
+      //inverse: !isFilterOpen(),
     }"
   >
     <!-- Contenu de la fenêtre -->
@@ -66,18 +67,18 @@
         :month="monthFromURL"
       />
     </div>
-    <p class="e-filter__text">Choisissez une catégorie d’évènement</p>
-    <div class="e-filter__Blockflowers">
+    <p class="efilter__text">Choisissez une catégorie d’évènement</p>
+    <div class="efilter__Blockflowers">
       <fleur_semieronde2
         @click="toggleNazaBool"
-        class="e-filter__flowers"
+        class="efilter__flowers"
         :couleur="secondaryColor"
       />
-      <fleur_pointue class="e-filter__flowers" :couleur="secondaryColor" />
+      <fleur_pointue class="efilter__flowers" :couleur="secondaryColor" />
     </div>
-    <div class="e-filter__Blockflowers">
-      <fleur_semieronde class="e-filter__flowers" :couleur="secondaryColor" />
-      <fleur_ronde class="e-filter__flowers" :couleur="secondaryColor" />
+    <div class="efilter__Blockflowers">
+      <fleur_semieronde class="efilter__flowers" :couleur="secondaryColor" />
+      <fleur_ronde class="efilter__flowers" :couleur="secondaryColor" />
     </div>
   </div>
 
@@ -118,11 +119,17 @@
 
   &__fleurs {
     justify-content: center;
-    margin-top: rem(60);
     gap: rem(33);
     display: none;
     @include medium-up {
       display: flex;
+      margin-top: rem(10);
+    }
+    @include large-up {
+      margin-top: rem(40);
+    }
+    @include x-large-up {
+      margin-top: rem(60);
     }
 
     &.--semieronde2:hover::before {
@@ -209,7 +216,12 @@
 }
 
 //Style de la fenêtre des filtres
-.e-filter {
+
+.invisible {
+  display: none;
+}
+.efilter {
+  display: block;
   position: fixed;
   z-index: 50;
   background-color: v-bind(primaryColor);
@@ -257,7 +269,8 @@
   }
 }
 
-.inverse {
+// Fenetre qui s'en va avec animation
+/*.inverse {
   animation: retour 2s forwards;
 }
 
@@ -267,9 +280,8 @@
   }
   to {
     transform: translateY(0);
-    opacity: 0; /* Ajoutez une opacité pour faire disparaître l'élément */
   }
-}
+}*/
 </style>
 
 <script>
