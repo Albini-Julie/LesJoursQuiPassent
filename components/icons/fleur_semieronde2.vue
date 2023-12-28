@@ -11,13 +11,6 @@ defineProps({
     viewBox="0 0 48 47"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    style="
-      flex-grow: 0;
-      flex-shrink: 0;
-      width: 46.97px;
-      height: 45.59px;
-      position: relative;
-    "
     preserveAspectRatio="none"
   >
     <path

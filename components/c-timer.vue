@@ -124,6 +124,7 @@ export default {
     font-family: $secondary-font-family;
     color: v-bind(couleur);
     font-size: $bigger-font-size;
+    text-align: center;
 
     @include large-up {
       font-size: $giant-font-size;
