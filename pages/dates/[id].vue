@@ -1,16 +1,65 @@
+<template>
+  <!--Header-->
+  <c-header filtre />
+  <div class="e-id__trait">
+    <c-trait
+      :couleur="secondaryColor"
+      :year="yearFromURL"
+      :day="dayFromURL"
+      :month="monthFromURL"
+    />
+  </div>
+  <!--Timer-->
+  <c-timer
+    :year="yearFromURL"
+    :day="dayFromURL"
+    :month="monthFromURL_before"
+    :couleur="secondaryColor"
+    class="e-id__timer"
+  />
+  <!--Fleurs de filtrage-->
+  <div class="e-id__fleurs">
+    <div class="e-id__fleurs --semieronde2">
+      <fleur_semieronde2 @click="toggleNazaBool" :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --pointue">
+      <fleur_pointue :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --semieronde">
+      <fleur_semieronde :couleur="secondaryColor" />
+    </div>
+    <div class="e-id__fleurs --ronde">
+      <fleur_ronde :couleur="secondaryColor" />
+    </div>
+  </div>
+  <!--Picture of the day-->
+  <div v-if="apodData && nazaBool">
+    <h3>{{ apodData.title }}</h3>
+    <p>{{ apodData.explanation }}</p>
+    <img :src="apodData.url" alt="NASA APOD" />
+  </div>
+  <!--Calculateur d'âge-->
+  <c-age
+    :year="yearFromURL"
+    :month="monthFromURL_before"
+    :day="dayFromURL"
+    :couleur="secondaryColor"
+    class="e-id__age"
+  />
+  <c-footer :couleur="secondaryColor" class="e-id__footer" />
+</template>
+
 <script>
 import axios from "axios";
 import { ref, onMounted, onUnmounted } from "vue";
 
 export default {
-  data() {
-    return {
-      apodData: null,
-      dateFromURL: null,
-    };
-  },
-
   setup() {
+    // Variables de données
+    const apodData = ref(null);
+    const dateFromURL = ref(null);
+    const nazaBool = ref(true);
+
     // Couleur Secondary et Primary selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
@@ -86,6 +135,11 @@ export default {
       }
     };
 
+    const toggleNazaBool = () => {
+      nazaBool.value = !nazaBool.value;
+      console.log(nazaBool.value);
+    };
+
     onMounted(() => {
       setColor();
     });
@@ -93,14 +147,20 @@ export default {
     onUnmounted(() => {
       setColor();
     });
+
     return {
+      apodData,
+      dateFromURL,
+      nazaBool,
       primaryColor,
       secondaryColor,
       dayGet,
       monthF,
       yearGet,
+      toggleNazaBool,
     };
   },
+
   // Récupération de l'image du jour
   mounted() {
     // Récupérer l'URL complète
@@ -171,57 +231,6 @@ export default {
 };
 </script>
 
-<template>
-  <!--Header-->
-  <c-header filtre />
-  <div class="e-id__trait">
-    <c-trait
-      :couleur="secondaryColor"
-      :year="yearFromURL"
-      :day="dayFromURL"
-      :month="monthFromURL"
-    />
-  </div>
-  <!--Timer-->
-  <c-timer
-    :year="yearFromURL"
-    :day="dayFromURL"
-    :month="monthFromURL_before"
-    :couleur="secondaryColor"
-    class="e-id__timer"
-  />
-  <!--Fleurs de filtrage-->
-  <div class="e-id__fleurs">
-    <div class="e-id__fleurs --semieronde2">
-      <fleur_semieronde2 :couleur="secondaryColor" />
-    </div>
-    <div class="e-id__fleurs --pointue">
-      <fleur_pointue :couleur="secondaryColor" />
-    </div>
-    <div class="e-id__fleurs --semieronde">
-      <fleur_semieronde :couleur="secondaryColor" />
-    </div>
-    <div class="e-id__fleurs --ronde">
-      <fleur_ronde :couleur="secondaryColor" />
-    </div>
-  </div>
-  <!--Picture of the day-->
-  <div v-if="apodData">
-    <h3>{{ apodData.title }}</h3>
-    <p>{{ apodData.explanation }}</p>
-    <img :src="apodData.url" alt="NASA APOD" />
-  </div>
-  <!--Calculateur d'âge-->
-  <c-age
-    :year="yearFromURL"
-    :month="monthFromURL_before"
-    :day="dayFromURL"
-    :couleur="secondaryColor"
-    class="e-id__age"
-  />
-  <c-footer :couleur="secondaryColor" class="e-id__footer" />
-</template>
-
 <style lang="scss" scoped>
 .e-id {
   &__trait {
@@ -262,7 +271,7 @@ export default {
 
     &.--semieronde2:hover::before {
       /* Afficher le message au survol */
-      content: "Sport";
+      content: "Image of the day by NAZA";
       display: block;
       position: absolute;
       background-color: v-bind(primaryColor);
