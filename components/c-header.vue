@@ -59,7 +59,6 @@ export default {
 
     const funcFilter = () => {
       filter_open.value = !filter_open.value;
-      console.log(filter_open.value);
     };
 
     onMounted(() => {
@@ -109,6 +108,7 @@ export default {
     <!--Logo en plus-->
     <croix
       v-if="croix"
+      @click="funcFilter"
       class="e-header__icon --phone"
       :couleur="secondaryColor"
     />
