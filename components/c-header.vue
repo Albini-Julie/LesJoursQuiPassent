@@ -1,5 +1,6 @@
 <script>
 import { ref, onMounted, onUnmounted, defineProps } from "vue";
+import { filter_open } from "@/config.js";
 
 export default {
   props: {
@@ -56,6 +57,11 @@ export default {
       }
     };
 
+    const funcFilter = () => {
+      filter_open.value = !filter_open.value;
+      console.log(filter_open.value);
+    };
+
     onMounted(() => {
       setColor();
     });
@@ -67,6 +73,7 @@ export default {
       primaryColor,
       secondaryColor,
       icons,
+      funcFilter,
     };
   },
 };
@@ -106,6 +113,7 @@ export default {
       :couleur="secondaryColor"
     />
     <filtre
+      @click="funcFilter"
       v-else-if="filtre"
       class="e-header__icon --phone"
       :couleur="secondaryColor"
@@ -169,3 +177,4 @@ export default {
   }
 }
 </style>
+~/config.js
