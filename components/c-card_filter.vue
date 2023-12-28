@@ -1,0 +1,112 @@
+<template>
+  <div class="e-card"></div>
+  <div class="e-card__content">
+    <div class="e-card__icons">
+      <fleur_pointue v-if="fleur == 'pointue'" :couleur="couleur2" />
+      <fleur_ronde v-else-if="fleur == 'ronde'" :couleur="couleur2" />
+      <fleur_semieronde v-else-if="fleur == 'semieronde'" :couleur="couleur2" />
+      <fleur_semieronde2
+        v-else-if="fleur == 'semieronde2'"
+        :couleur="couleur2"
+      />
+      <croix :couleur="couleur2" />
+    </div>
+    <div class="e-card__script">
+      <h3 class="e-card__title">{{ title }}</h3>
+      <p class="e-card__text">{{ text }}</p>
+    </div>
+  </div>
+  <div class="e-card__button">
+    <c-bouton size="small" variant="rounded" :couleur="couleur2"
+      >Choisir cette catégorie</c-bouton
+    >
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  couleur: String,
+  couleur2: String,
+  fleur: String,
+  title: String,
+  text: String,
+});
+</script>
+
+<style lang="scss" scoped>
+.e-card {
+  z-index: 100;
+  position: fixed;
+  background-color: black;
+  width: 100%;
+  height: 100vh;
+  opacity: 60%;
+  top: 0;
+
+  &__content {
+    position: fixed;
+    width: 80%;
+    border-radius: rem(10);
+    z-index: 1000;
+    top: 20%;
+    padding-top: rem(15);
+    padding-bottom: rem(15);
+    padding-right: rem(20);
+    padding-left: rem(20);
+  }
+
+  &__script {
+    position: fixed;
+    width: 80%;
+    border-radius: rem(10);
+    z-index: 1000;
+    color: white;
+    background-color: v-bind(couleur2);
+    opacity: 100%;
+    padding-top: rem(15);
+    padding-bottom: rem(15);
+    padding-right: rem(20);
+    padding-left: rem(20);
+  }
+
+  &__title {
+    font-family: $secondary-font-family;
+    color: v-bind(couleur);
+    font-size: $bigger-font-size;
+    font-weight: 200;
+    margin: rem(0);
+    margin-bottom: rem(40);
+  }
+
+  &__text {
+    font-family: $primary-font-family;
+    color: v-bind(couleur);
+    font-size: $regular-font-size;
+    font-weight: 600;
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: rem(30);
+    padding-top: rem(15);
+    padding-bottom: rem(15);
+    padding-left: rem(25);
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 80%;
+    z-index: 1000;
+    top: 60%;
+    margin-top: rem(30);
+    padding-top: rem(15);
+    padding-bottom: rem(15);
+    padding-left: rem(25);
+    padding-right: rem(25);
+  }
+}
+</style>

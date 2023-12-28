@@ -70,17 +70,39 @@
     <p class="efilter__text">Choisissez une catégorie d’évènement</p>
     <div class="efilter__Blockflowers">
       <fleur_semieronde2
-        @click="toggleNazaBool"
+        @click="funcFilterChoice(1)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
-      <fleur_pointue class="efilter__flowers" :couleur="secondaryColor" />
+      <fleur_pointue
+        @click="funcFilterChoice(2)"
+        class="efilter__flowers"
+        :couleur="secondaryColor"
+      />
     </div>
     <div class="efilter__Blockflowers">
-      <fleur_semieronde class="efilter__flowers" :couleur="secondaryColor" />
-      <fleur_ronde class="efilter__flowers" :couleur="secondaryColor" />
+      <fleur_semieronde
+        @click="funcFilterChoice(3)"
+        class="efilter__flowers"
+        :couleur="secondaryColor"
+      />
+      <fleur_ronde
+        @click="funcFilterChoice(4)"
+        class="efilter__flowers"
+        :couleur="secondaryColor"
+      />
     </div>
   </div>
+
+  <c-card_filter
+    v-if="FilterChoice == 'naza'"
+    :couleur="secondaryColor"
+    :couleur2="primaryColor"
+    title="Photo du jour"
+    text="Chaque jour, la Naza prend une photo de l'univers. Découvrez celle qui a été prise le jour de votre naissance."
+    fleur="semieronde2"
+    class="efilter__card"
+  />
 
   <c-footer :couleur="secondaryColor" class="e-id__footer" />
 </template>
@@ -223,13 +245,19 @@
 .efilter {
   display: block;
   position: fixed;
-  z-index: 50;
+  z-index: 10;
   background-color: v-bind(primaryColor);
   width: 100%;
   height: 100vh;
 
   @include medium-up {
     display: none;
+  }
+
+  &__card {
+    @include medium-up {
+      display: none;
+    }
   }
 
   &__text {
@@ -295,6 +323,8 @@ export default {
     const apodData = ref(null);
     const dateFromURL = ref(null);
     const nazaBool = ref(true);
+    const FilterChoice = ref("");
+    const FilterChoiceOpen = ref(false);
 
     // Couleur Secondary et Primary selon les saisons
     const primaryColor = ref("");
@@ -380,6 +410,42 @@ export default {
       return filter_open.value === true;
     };
 
+    const funcFilterChoice = (num) => {
+      if (FilterChoiceOpen.value === true) {
+        FilterChoiceOpen.value = false;
+        FilterChoice.value = "";
+        console.log(FilterChoice.value, FilterChoiceOpen.value);
+        return FilterChoice.value, FilterChoiceOpen.value;
+      } else {
+        switch (num) {
+          case 1:
+            FilterChoiceOpen.value = true;
+            FilterChoice.value = "naza";
+            console.log(FilterChoice.value, FilterChoiceOpen.value);
+            return FilterChoice.value, FilterChoice.value;
+            break;
+          case 2:
+            FilterChoice.value = "histoire";
+            FilterChoiceOpen.value = true;
+            console.log(FilterChoice.value);
+            return FilterChoice.value, FilterChoice.value;
+            break;
+          case 3:
+            FilterChoice.value = "cinema";
+            FilterChoiceOpen.value = true;
+            console.log(FilterChoice.value);
+            return FilterChoice.value, FilterChoice.value;
+            break;
+          case 4:
+            FilterChoice.value = "musique";
+            FilterChoiceOpen.value = true;
+            console.log(FilterChoice.value);
+            return FilterChoice.value, FilterChoice.value;
+            break;
+        }
+      }
+    };
+
     onMounted(() => {
       setColor();
       console.log(filter_open.value);
@@ -400,6 +466,8 @@ export default {
       yearGet,
       toggleNazaBool,
       isFilterOpen,
+      funcFilterChoice,
+      FilterChoice,
     };
   },
 
