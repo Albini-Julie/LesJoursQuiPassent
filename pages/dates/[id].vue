@@ -215,6 +215,7 @@
   background-color: v-bind(primaryColor);
   width: 100%;
   height: 100vh;
+
   @include medium-up {
     display: none;
   }
@@ -257,7 +258,7 @@
 }
 
 .inverse {
-  animation: retour 2s;
+  animation: retour 2s forwards;
 }
 
 @keyframes retour {
@@ -266,6 +267,7 @@
   }
   to {
     transform: translateY(0);
+    opacity: 0; /* Ajoutez une opacité pour faire disparaître l'élément */
   }
 }
 </style>
