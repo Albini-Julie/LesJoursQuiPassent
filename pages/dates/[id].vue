@@ -20,16 +20,32 @@
   <!--Fleurs de filtrage-->
   <div class="e-id__fleurs">
     <div class="e-id__fleurs --semieronde2">
-      <fleur_semieronde2 @click="toggleNazaBool" :couleur="secondaryColor" />
+      <fleur_semieronde2
+        id="1"
+        @click="toggleBool('naza', 'false')"
+        :couleur="secondaryColor"
+      />
     </div>
     <div class="e-id__fleurs --pointue">
-      <fleur_pointue :couleur="secondaryColor" />
+      <fleur_pointue
+        id="2"
+        @click="toggleBool('story', 'false')"
+        :couleur="secondaryColor"
+      />
     </div>
     <div class="e-id__fleurs --semieronde">
-      <fleur_semieronde :couleur="secondaryColor" />
+      <fleur_semieronde
+        id="3"
+        @click="toggleBool('cinema', 'false')"
+        :couleur="secondaryColor"
+      />
     </div>
     <div class="e-id__fleurs --ronde">
-      <fleur_ronde :couleur="secondaryColor" />
+      <fleur_ronde
+        id="4"
+        @click="toggleBool('music', 'false')"
+        :couleur="secondaryColor"
+      />
     </div>
   </div>
   <!--Picture of the day-->
@@ -70,11 +86,13 @@
     <p class="efilter__text">Choisissez une catégorie d’évènement</p>
     <div class="efilter__Blockflowers">
       <fleur_semieronde2
+        id="5"
         @click="inverserCardOpen(1)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
       <fleur_pointue
+        id="6"
         @click="inverserCardOpen(2)"
         class="efilter__flowers"
         :couleur="secondaryColor"
@@ -82,11 +100,13 @@
     </div>
     <div class="efilter__Blockflowers">
       <fleur_semieronde
+        id="7"
         @click="inverserCardOpen(3)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
       <fleur_ronde
+        id="8"
         @click="inverserCardOpen(4)"
         class="efilter__flowers"
         :couleur="secondaryColor"
@@ -101,6 +121,7 @@
     title="Photo du jour"
     text="Chaque jour, la Naza prend une photo de l'univers. Découvrez celle qui a été prise le jour de votre naissance."
     fleur="semieronde2"
+    filterChoice="naza"
     class="efilter__card"
   />
   <c-card_filter
@@ -110,6 +131,7 @@
     title="Evénements historiques"
     text="Découvrez tout les évènements historiques qui sont arrivés à chacun de vos anniversaire !"
     fleur="pointue"
+    filterChoice="story"
     class="efilter__card"
   />
   <c-card_filter
@@ -119,6 +141,7 @@
     title="Sorties cinéma"
     text="Pour chacun de vos anniversaires découvrez les sorties cinéma du jour."
     fleur="semieronde"
+    filterChoice="cinema"
     class="efilter__card"
   />
   <c-card_filter
@@ -128,6 +151,7 @@
     title="Sorties musicales"
     text="Suivez les sorties musicales qui sont arrivées à chacun de vos anniversaire"
     fleur="ronde"
+    filterChoice="music"
     class="efilter__card"
   />
 
@@ -344,6 +368,7 @@ import axios from "axios";
 import { ref, onMounted, onUnmounted } from "vue";
 import { filter_open } from "@/config.js";
 import { card_open } from "@/config.js";
+import { nazaBool, storyBool, cinemaBool, musicBool } from "@/config.js";
 
 export default {
   setup() {
@@ -429,8 +454,41 @@ export default {
       }
     };
 
-    const toggleNazaBool = () => {
-      nazaBool.value = !nazaBool.value;
+    const toggleBool = (theme, test) => {
+      switch (theme) {
+        case "naza":
+          console.log("NazaBool :", nazaBool.value);
+          nazaBool.value = !nazaBool.value;
+          if (test == "true") {
+            card_open.value = !card_open.value;
+          }
+          console.log("NazaBool :", nazaBool.value);
+          return nazaBool.value;
+        case "story":
+          console.log("StoryBool :", storyBool.value);
+          storyBool.value = !storyBool.value;
+          if (test == "true") {
+            card_open.value = !card_open.value;
+          }
+          console.log("StoryBool :", storyBool.value);
+          return storyBool.value;
+        case "cinema":
+          console.log("CinemaBool :", cinemaBool.value);
+          cinemaBool.value = !cinemaBool.value;
+          if (test == "true") {
+            card_open.value = !card_open.value;
+          }
+          console.log("CinemaBool :", cinemaBool.value);
+          return cinemaBool.value;
+        case "music":
+          console.log("MusicBool :", musicBool.value);
+          musicBool.value = !musicBool.value;
+          if (test == "true") {
+            card_open.value = !card_open.value;
+          }
+          console.log("MusicBool :", musicBool.value);
+          return musicBool.value;
+      }
     };
 
     const isFilterOpen = () => {
@@ -503,7 +561,7 @@ export default {
       dayGet,
       monthF,
       yearGet,
-      toggleNazaBool,
+      toggleBool,
       isFilterOpen,
 
       FilterChoice,

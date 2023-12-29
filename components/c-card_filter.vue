@@ -17,14 +17,19 @@
     </div>
   </div>
   <div class="e-card__button">
-    <c-bouton size="small" variant="rounded" :couleur="couleur2"
-      >Choisir cette catégorie</c-bouton
+    <c-bouton
+      size="small"
+      variant="rounded"
+      :couleur="couleur2"
+      @click="toggleBool(filterChoice, 'true')"
+      >Ajouter/Supprimer cette catégorie</c-bouton
     >
   </div>
 </template>
 
 <script setup>
 import { card_open } from "@/config.js";
+import { nazaBool, storyBool, cinemaBool, musicBool } from "@/config.js";
 
 defineProps({
   couleur: String,
@@ -32,12 +37,50 @@ defineProps({
   fleur: String,
   title: String,
   text: String,
+  filterChoice: String,
 });
 
 // Ajoutez une méthode pour inverser la valeur de Card_open
 const inverserCardOpen = () => {
   card_open.value = !card_open.value;
   console.log("Card_open", card_open.value);
+};
+
+const toggleBool = (theme, test) => {
+  switch (theme) {
+    case "naza":
+      console.log("NazaBool :", nazaBool.value);
+      nazaBool.value = !nazaBool.value;
+      if (test == "true") {
+        card_open.value = !card_open.value;
+      }
+      console.log("NazaBool :", nazaBool.value);
+      return nazaBool.value;
+    case "story":
+      console.log("StoryBool :", storyBool.value);
+      storyBool.value = !storyBool.value;
+      if (test == "true") {
+        card_open.value = !card_open.value;
+      }
+      console.log("StoryBool :", storyBool.value);
+      return storyBool.value;
+    case "cinema":
+      console.log("CinemaBool :", cinemaBool.value);
+      cinemaBool.value = !cinemaBool.value;
+      if (test == "true") {
+        card_open.value = !card_open.value;
+      }
+      console.log("CinemaBool :", cinemaBool.value);
+      return cinemaBool.value;
+    case "music":
+      console.log("MusicBool :", musicBool.value);
+      musicBool.value = !musicBool.value;
+      if (test == "true") {
+        card_open.value = !card_open.value;
+      }
+      console.log("MusicBool :", musicBool.value);
+      return musicBool.value;
+  }
 };
 </script>
 
