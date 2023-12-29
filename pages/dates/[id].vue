@@ -70,24 +70,24 @@
     <p class="efilter__text">Choisissez une catégorie d’évènement</p>
     <div class="efilter__Blockflowers">
       <fleur_semieronde2
-        @click="funcFilterChoice(1)"
+        @click="inverserCardOpen(1)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
       <fleur_pointue
-        @click="funcFilterChoice(2)"
+        @click="inverserCardOpen(2)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
     </div>
     <div class="efilter__Blockflowers">
       <fleur_semieronde
-        @click="funcFilterChoice(3)"
+        @click="inverserCardOpen(3)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
       <fleur_ronde
-        @click="funcFilterChoice(4)"
+        @click="inverserCardOpen(4)"
         class="efilter__flowers"
         :couleur="secondaryColor"
       />
@@ -95,12 +95,39 @@
   </div>
 
   <c-card_filter
-    v-if="FilterChoice == 'naza'"
+    v-if="FilterChoice == 'naza' && card_open"
     :couleur="secondaryColor"
     :couleur2="primaryColor"
     title="Photo du jour"
     text="Chaque jour, la Naza prend une photo de l'univers. Découvrez celle qui a été prise le jour de votre naissance."
     fleur="semieronde2"
+    class="efilter__card"
+  />
+  <c-card_filter
+    v-else-if="FilterChoice == 'histoire' && card_open"
+    :couleur="secondaryColor"
+    :couleur2="primaryColor"
+    title="Evénements historiques"
+    text="Découvrez tout les évènements historiques qui sont arrivés à chacun de vos anniversaire !"
+    fleur="pointue"
+    class="efilter__card"
+  />
+  <c-card_filter
+    v-else-if="FilterChoice == 'cinema' && card_open"
+    :couleur="secondaryColor"
+    :couleur2="primaryColor"
+    title="Sorties cinéma"
+    text="Pour chacun de vos anniversaires découvrez les sorties cinéma du jour."
+    fleur="semieronde"
+    class="efilter__card"
+  />
+  <c-card_filter
+    v-else-if="FilterChoice == 'musique' && card_open"
+    :couleur="secondaryColor"
+    :couleur2="primaryColor"
+    title="Sorties musicales"
+    text="Suivez les sorties musicales qui sont arrivées à chacun de vos anniversaire"
+    fleur="ronde"
     class="efilter__card"
   />
 
@@ -316,6 +343,7 @@
 import axios from "axios";
 import { ref, onMounted, onUnmounted } from "vue";
 import { filter_open } from "@/config.js";
+import { card_open } from "@/config.js";
 
 export default {
   setup() {
@@ -403,52 +431,63 @@ export default {
 
     const toggleNazaBool = () => {
       nazaBool.value = !nazaBool.value;
-      console.log(nazaBool.value);
     };
 
     const isFilterOpen = () => {
       return filter_open.value === true;
     };
 
-    const funcFilterChoice = (num) => {
-      if (FilterChoiceOpen.value === true) {
-        FilterChoiceOpen.value = false;
-        FilterChoice.value = "";
-        console.log(FilterChoice.value, FilterChoiceOpen.value);
-        return FilterChoice.value, FilterChoiceOpen.value;
-      } else {
-        switch (num) {
-          case 1:
-            FilterChoiceOpen.value = true;
-            FilterChoice.value = "naza";
-            console.log(FilterChoice.value, FilterChoiceOpen.value);
-            return FilterChoice.value, FilterChoice.value;
-            break;
-          case 2:
-            FilterChoice.value = "histoire";
-            FilterChoiceOpen.value = true;
-            console.log(FilterChoice.value);
-            return FilterChoice.value, FilterChoice.value;
-            break;
-          case 3:
-            FilterChoice.value = "cinema";
-            FilterChoiceOpen.value = true;
-            console.log(FilterChoice.value);
-            return FilterChoice.value, FilterChoice.value;
-            break;
-          case 4:
-            FilterChoice.value = "musique";
-            FilterChoiceOpen.value = true;
-            console.log(FilterChoice.value);
-            return FilterChoice.value, FilterChoice.value;
-            break;
-        }
+    // Ajoutez une méthode pour inverser la valeur de Card_open
+    const inverserCardOpen = (num) => {
+      card_open.value = !card_open.value;
+      switch (num) {
+        case 1:
+          FilterChoice.value = "naza";
+          console.log(
+            "FilterChoice: ",
+            FilterChoiceOpen.value,
+            "Card_open: ",
+            card_open.value
+          );
+          return card_open.value;
+          break;
+        case 2:
+          FilterChoice.value = "histoire";
+          console.log(
+            "FilterChoice: ",
+            FilterChoiceOpen.value,
+            "Card_open: ",
+            card_open.value
+          );
+          return card_open.value;
+          break;
+        case 3:
+          FilterChoice.value = "cinema";
+
+          console.log(
+            "FilterChoice: ",
+            FilterChoiceOpen.value,
+            "Card_open: ",
+            card_open.value
+          );
+          return card_open.value;
+          break;
+        case 4:
+          FilterChoice.value = "musique";
+          console.log(
+            "FilterChoice: ",
+            FilterChoiceOpen.value,
+            "Card_open: ",
+            card_open.value
+          );
+          return card_open.value;
+          break;
       }
+      return card_open.value;
     };
 
     onMounted(() => {
       setColor();
-      console.log(filter_open.value);
     });
 
     onUnmounted(() => {
@@ -466,8 +505,10 @@ export default {
       yearGet,
       toggleNazaBool,
       isFilterOpen,
-      funcFilterChoice,
+
       FilterChoice,
+      inverserCardOpen,
+      card_open,
     };
   },
 

@@ -9,7 +9,7 @@
         v-else-if="fleur == 'semieronde2'"
         :couleur="couleur2"
       />
-      <croix :couleur="couleur2" />
+      <croix @click="inverserCardOpen" :couleur="couleur2" />
     </div>
     <div class="e-card__script">
       <h3 class="e-card__title">{{ title }}</h3>
@@ -24,6 +24,8 @@
 </template>
 
 <script setup>
+import { card_open } from "@/config.js";
+
 defineProps({
   couleur: String,
   couleur2: String,
@@ -31,6 +33,12 @@ defineProps({
   title: String,
   text: String,
 });
+
+// Ajoutez une méthode pour inverser la valeur de Card_open
+const inverserCardOpen = () => {
+  card_open.value = !card_open.value;
+  console.log("Card_open", card_open.value);
+};
 </script>
 
 <style lang="scss" scoped>
