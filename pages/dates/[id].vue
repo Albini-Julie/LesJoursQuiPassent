@@ -627,6 +627,11 @@ export default {
       this.monthFromURL_before = parseInt(month, 10);
       this.dayFromURL = parseInt(day, 10);
 
+      // Ajoutez des déclarations de console.log pour déboguer
+      console.log("Year:", this.yearFromURL);
+      console.log("Month before:", this.monthFromURL_before);
+      console.log("Day:", this.dayFromURL);
+
       if (this.monthFromURL_before == 1) {
         this.monthFromURL = "Janvier";
       } else if (this.monthFromURL_before == 2) {
@@ -686,9 +691,14 @@ export default {
       }
     },
     getImageUrl(path) {
-      console.log(path);
-      return path ? this.imageBaseURL + path : ""; // Concatenate with base URL
+      return path ? `https://image.tmdb.org/t/p/w500${path}` : "";
     },
+    /*getImageUrl(path) {
+      const urlString = window.location.href;
+      const url = new URL(urlString);
+      return path ? url + path : ""; // Concatenate with base URL
+      //return path ? this.imageBaseURL + path : ""; // Concatenate with base URL
+    },*/
   },
 };
 </script>
