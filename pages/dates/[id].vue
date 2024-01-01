@@ -50,10 +50,44 @@
   </div>
   <!--Picture of the day-->
   <div v-if="apodData && nazaBool">
+    <h1 style="font-weight: 800; font-family: Urbanist; margin-left: 50px">
+      Image of the day
+    </h1>
     <h3>{{ apodData.title }}</h3>
     <p>{{ apodData.explanation }}</p>
     <img :src="apodData.url" alt="NASA APOD" />
   </div>
+
+  <!--Films sortis-->
+  <div v-if="movies">
+    <h1 style="font-weight: 800; font-family: Urbanist; margin-left: 50px">
+      Films sortis cette année
+    </h1>
+    <div v-for="movie in movies" :key="movie.id">
+      <p
+        style="
+          margin-top: 50px;
+          margin-bottom: 20px;
+          font-weight: 800;
+          font-size: 20px;
+        "
+      >
+        {{ movie.title }}
+      </p>
+      <p>{{ movie.overview }}</p>
+      <p>
+        <span style="font-weight: 800">Date de sortie</span> :
+        {{ movie.release_date }}
+      </p>
+      <img
+        v-if="getImageUrl(movie.poster_path)"
+        :src="getImageUrl(movie.poster_path)"
+        alt="Movie Poster"
+        style="width: 60%; height: 60%"
+      />
+    </div>
+  </div>
+
   <!--Calculateur d'âge-->
   <c-age
     :year="yearFromURL"
@@ -387,6 +421,8 @@ export default {
     const monthGet = dateGet.getMonth() + 1;
     const monthF = ref("");
     const yearGet = dateGet.getFullYear();
+    const movies = [];
+    const imageBaseURL = "https://image.tmdb.org/t/p/w500"; // Base URL for movie images
 
     if (monthGet == 1) {
       monthF.value = "Janvier";
@@ -570,7 +606,6 @@ export default {
     };
   },
 
-  // Récupération de l'image du jour
   mounted() {
     // Récupérer l'URL complète
     const urlString = window.location.href;
@@ -619,6 +654,7 @@ export default {
       }
 
       // Appeler la méthode fetchApod après avoir récupéré la date
+      this.fetchMovies(); // Ensure that fetchMovies is called only when dateFromURL is defined
       this.fetchApod();
     }
   },
@@ -635,6 +671,23 @@ export default {
         console.error("Error fetching APOD:", error);
         this.apodData = null;
       }
+    },
+
+    async fetchMovies() {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/discover/movie?api_key=8e0a1d9f7eb0d1d657ea7de87fd35e87&primary_release_year=${this.yearFromURL}&language=fr-FR`
+        );
+        this.movies = response.data.results;
+        console.log(this.movies);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+        this.movies = [];
+      }
+    },
+    getImageUrl(path) {
+      console.log(path);
+      return path ? this.imageBaseURL + path : ""; // Concatenate with base URL
     },
   },
 };
