@@ -9,10 +9,17 @@
       :year="yearGet"
     />
   </div>
+
   <!--Citation-->
   <div class="quote">
-    <p class="quote_text">{{ quoteText }}</p>
-    <p class="quote__author">{{ quoteAuthor }}</p>
+    <p class="quote__content">
+      <apostrophe class="quote__apo" :couleur="secondaryColor" />
+      <p class="quote__text">{{ quoteText }}</p>
+      <apostrophe class="quote__apo" :couleur="secondaryColor" />
+    </p>
+    <div class="quote__author">
+      <p class="quote__text">{{ quoteAuthor }}</p>
+    </div>
   </div>
   <!--Titre-->
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
@@ -301,10 +308,75 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+
+  &__content {
+    display: flex;  
+    gap:20px;
+    justify-content: center;
+    margin-right: rem(20);
+    margin-left: rem(20);
+    @include medium-up{
+      margin-left:50px;
+      margin-right:50px
+    }
+    @include large-up{
+      margin-left:100px;
+      margin-right:100px
+    }
+    @include x-large-up {
+      margin-left:0px;
+      margin-right:0px;
+      text-align: start;
+      margin-right: 0;
+      margin-left: 0;
+      width: 80%;
+    }
+  }
+
+  &__apo {
+     display: none;
+    @include medium-up {
+      display: block;
+      width: rem(80);
+      height: rem(25);
+    }
+    @include large-up {
+      width: rem(90);
+      height: rem(40);
+    }
+    @include x-large-up {
+      width: rem(110);
+      height: rem(60);
+    }
+  }
+
+  &__text {
+    font-family: $primary-font-family;
+    font-size: $regular-font-size;
+    color: v-bind(secondaryColor);
+    @include medium-up {
+      font-size: $medium-font-size;
+    }
+    @include large-up {
+      font-size: $big-font-size;
+    }
+
+    &.--size {
+      font-size: $medium-font-size;
+      @include medium-up {
+        font-size: $big-font-size;
+      }
+      @include large-up {
+        font-size: $bigger-font-size;
+      }
+    }
+  }
 
   &__author {
     display: flex;
     justify-content: end;
+    width: 70%;
   }
 }
 </style>
