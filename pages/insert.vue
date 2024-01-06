@@ -1,5 +1,6 @@
 <template>
   <c-header :couleur="secondaryColor" />
+  <!--Date du jour-->
   <div class="trait">
     <c-trait
       :couleur="secondaryColor"
@@ -8,7 +9,14 @@
       :year="yearGet"
     />
   </div>
+  <!--Citation-->
+  <div class="quote">
+    <p class="quote_text">{{ quoteText }}</p>
+    <p class="quote__author">{{ quoteAuthor }}</p>
+  </div>
+  <!--Titre-->
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
+  <!--Champ d'entrée-->
   <div class="input">
     <input
       type="text"
@@ -17,6 +25,7 @@
       placeholder="année-mois-jour"
     />
   </div>
+  <!--Boutons-->
   <div class="button">
     <c-bouton
       :couleur="secondaryColor"
@@ -32,6 +41,7 @@
       >Commencer</c-bouton
     >
   </div>
+  <!--Footer-->
   <c-footer :couleur="secondaryColor" />
 </template>
 
@@ -40,6 +50,23 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 export default {
   setup() {
+    const quoteText = ref("");
+    const quoteAuthor = ref("");
+    //Fonction citation
+    const fetchDataFromApi = async () => {
+      try {
+        const response = await fetch("https://api.quotable.io/random");
+        const quote = await response.json();
+
+        // Output the quote and author name
+        quoteText.value = quote.content;
+        quoteAuthor.value = quote.author;
+        console.log(quote.content);
+        console.log(`- ${quote.author}`);
+      } catch (error) {
+        console.error("Error fetching random quote:", error);
+      }
+    };
     //redirection vers la page de la date
     function redirectToDatesPage(date) {
       console.log(date);
@@ -174,10 +201,12 @@ export default {
 
     onMounted(() => {
       setColor();
+      fetchDataFromApi();
     });
 
     onUnmounted(() => {
       setColor();
+      fetchDataFromApi();
     });
     return {
       primaryColor,
@@ -187,6 +216,8 @@ export default {
       monthF,
       yearGet,
       redirectToDatesPage,
+      quoteText,
+      quoteAuthor,
     };
   },
 };
@@ -263,6 +294,17 @@ export default {
 
   &:focus {
     outline: none;
+  }
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__author {
+    display: flex;
+    justify-content: end;
   }
 }
 </style>
