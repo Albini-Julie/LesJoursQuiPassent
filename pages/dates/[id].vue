@@ -339,14 +339,22 @@ export default {
     <h1 class="movies__ctnTitle">Films sortis cette année</h1>
     <div class="scroll__container">
       <div v-for="movie in movies" :key="movie.id" class="scroll__item">
-        <div style="display: flex; justify-content: center">
+        <div style="display: flex; justify-content: center; position: relative">
+          <svg
+            style="position: absolute; top: 50%; transform: translateY(-50%)"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1380.5 144.22">
+            <path
+              d="M12.52,80.1c25.87-30.14,61.5-49.9,100.86-55.58,43.34-6.25,83.95,6.07,121.81,26.54,41.54,22.46,82.35,45.53,126.45,62.79,43.77,17.14,90.04,28.85,137.19,30.22,98.6,2.86,191.3-38.75,283.79-66.94,49.28-15.02,99.12-28.11,149-41.01,48.38-12.51,99.32-28.06,149.71-19.1,44.81,7.96,84.41,31.58,125.39,50.02,20.67,9.3,41.68,17.43,64.13,21.19,23.15,3.88,46.62,4.08,69.87.93,11.67-1.58,23.16-3.99,34.49-7.15,9.28-2.59,5.34-17.07-3.99-14.46-46.7,13.03-95.3,11.62-140.45-6.42-41.86-16.73-80.59-41.04-124.13-53.58-48.64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
+              :fill="secondaryColor" />
+          </svg>
           <fleur_semieronde
             class="movies__flower"
             id="2"
             :couleur="secondaryColor"
             style="width: 300px; height: 300px" />
         </div>
-        <div>
+        <div class="movies__content">
           <div>
             <p class="movies__title">
               {{ movie.title }}
@@ -731,6 +739,10 @@ export default {
     text-align: center;
   }
 
+  &__content {
+    padding: rem(20);
+  }
+
   &__title {
     font-size: $big-font-size;
     color: v-bind(secondaryColor);
@@ -761,7 +773,6 @@ export default {
 .scroll__item {
   flex: 0 0 auto; /* Les éléments enfants ne grandissent pas, ne rétrécissent pas, mais sont basés sur leur taille automatique */
   width: clamp(300px, 100%, 600px); /* ou toute autre largeur fixe */
-  margin-right: 20px;
 }
 
 a {
