@@ -4,7 +4,7 @@
     <div ref="videoContainer" class="video-container">
       <video ref="videoRef">
         <source v-if="video == 'winter'" src="/Fleurs_bleues.mp4" type="video/mp4" />
-        <source v-else-if="video == 'spring'" src="/Fleurs_roses.mp4" type="video/mp4" />
+        <source v-else-if="video == 'spring'" src="/FLEURS_roses.mp4" type="video/mp4" />
         <source v-else-if="video == 'summer'" src="/FLEURS_BLANCHES.mp4" type="video/mp4" />
         <source v-else-if="video == 'automn'" src="/Fleurs_marrons.mp4" type="video/mp4" />
       </video>
