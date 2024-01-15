@@ -21,31 +21,24 @@
       <div class="e-mentions__Blocktext">
         <p class="e-mentions__Contenttext">[Adresse de votre site web]</p>
         <p class="e-mentions__Contenttext">
-          4 Pl. Lucien Tharradin, 25200 Montbéliard - Département MMI
-          Montbéliard
+          4 Pl. Lucien Tharradin, 25200 Montbéliard - Département MMI Montbéliard
         </p>
         <p class="e-mentions__Contenttext">lesjoursquipassent@gmail.com</p>
         <p class="e-mentions__Contenttext">07 60 38 72 51</p>
         <p class="e-mentions__Contenttext">Responsable de la Publication :</p>
         <p class="e-mentions__Contenttext">
-          Lilian Chesneau-Ciccarelli et Julie Albini, partie développement du
-          projet
+          Lilian Chesneau-Ciccarelli et Julie Albini, partie développement du projet
         </p>
         <p class="e-mentions__Contenttext">Hébergement du Site :</p>
         <p class="e-mentions__Contenttext">Infomaniak</p>
-        <p class="e-mentions__Contenttext">
-          Rue Eugène Marziano 25 - 1227 Les Acacias / Genève
-        </p>
-        <p class="e-mentions__Contenttext">
-          Technoparkstrasse 3 - 8406 Winterthur
-        </p>
+        <p class="e-mentions__Contenttext">Rue Eugène Marziano 25 - 1227 Les Acacias / Genève</p>
+        <p class="e-mentions__Contenttext">Technoparkstrasse 3 - 8406 Winterthur</p>
         <p class="e-mentions__Contenttext">https://www.infomaniak.com/fr</p>
         <p class="e-mentions__Contenttext">Propriété Intellectuelle :</p>
         <p class="e-mentions__Contenttext">
-          L’ensemble du contenu de ce site web, y compris les textes, les
-          graphiques, les logos, les images, les clips audio et vidéo, est la
-          propriété du département MMI Montbéliard et est protégé par les lois
-          sur la propriété intellectuelle. Toute reproduction, distribution, ou
+          L’ensemble du contenu de ce site web, y compris les textes, les graphiques, les logos, les
+          images, les clips audio et vidéo, est la propriété du département MMI Montbéliard et est
+          protégé par les lois sur la propriété intellectuelle. Toute reproduction, distribution, ou
           utilisation non autorisée de ce contenu est strictement interdite.
         </p>
       </div>
@@ -59,37 +52,32 @@
           Collecte et Utilisation des Données Personnelles :
         </p>
         <p class="e-mentions__Contenttext">
-          Veuillez vous référer à notre politique de confidentialité pour des
-          informations détaillées sur la collecte et l’utilisation des données
-          personnelles.
+          Veuillez vous référer à notre politique de confidentialité pour des informations
+          détaillées sur la collecte et l’utilisation des données personnelles.
         </p>
         <p class="e-mentions__Contenttext">Liens Externes :</p>
         <p class="e-mentions__Contenttext --top">
-          Ce site web peut contenir des liens vers des sites tiers. Les jours
-          qui passent n’assume aucune responsabilité quant au contenu ou aux
-          pratiques de confidentialité de ces sites tiers.
+          Ce site web peut contenir des liens vers des sites tiers. Les jours qui passent n’assume
+          aucune responsabilité quant au contenu ou aux pratiques de confidentialité de ces sites
+          tiers.
         </p>
         <p class="e-mentions__Contenttext --top">Responsabilité :</p>
         <p class="e-mentions__Contenttext">
-          Bien que nous nous efforçons de fournir des informations précises et à
-          jour, Les jours qui passent ne garantit pas l’exactitude ni
-          l’exhaustivité du contenu de ce site web. Les jours qui passent
-          décline toute responsabilité pour tout dommage résultant de
+          Bien que nous nous efforçons de fournir des informations précises et à jour, Les jours qui
+          passent ne garantit pas l’exactitude ni l’exhaustivité du contenu de ce site web. Les
+          jours qui passent décline toute responsabilité pour tout dommage résultant de
           l’utilisation de ce site web.
         </p>
+        <p class="e-mentions__Contenttext --top">Modification des Mentions Légales :</p>
         <p class="e-mentions__Contenttext --top">
-          Modification des Mentions Légales :
-        </p>
-        <p class="e-mentions__Contenttext --top">
-          Les jours qui passent se réserve le droit de modifier ces mentions
-          légales à tout moment. Les utilisateurs sont encouragés à consulter
-          régulièrement cette page pour rester informés des mises à jour.
+          Les jours qui passent se réserve le droit de modifier ces mentions légales à tout moment.
+          Les utilisateurs sont encouragés à consulter régulièrement cette page pour rester informés
+          des mises à jour.
         </p>
         <p class="e-mentions__Contenttext --top">Contact :</p>
         <p class="e-mentions__Contenttext">
-          Pour toute question ou demande de renseignements concernant ces
-          mentions légales, veuillez nous contacter à
-          lesjoursquipassentcontact@gmail.com.
+          Pour toute question ou demande de renseignements concernant ces mentions légales, veuillez
+          nous contacter à lesjoursquipassentcontact@gmail.com.
         </p>
       </div>
       <!--Flower desktop-->
@@ -120,12 +108,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
       } else if (
@@ -244,7 +227,7 @@ export default {
     margin-right: rem(25);
     margin-top: rem(25);
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     @include medium-up {
       margin-right: rem(50);
       margin-top: rem(50);
@@ -254,7 +237,7 @@ export default {
   &__Blocktext {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     font-family: $primary-font-family;
     font-size: $regular-font-size;
     color: v-bind(secondaryColor);

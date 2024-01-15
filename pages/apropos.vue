@@ -10,24 +10,19 @@
     <div class="e-propos__content">
       <!--Flower mobile-->
       <div class="e-propos__blockFlower">
-        <GiantFlower
-          class="e-propos__flower --mobile"
-          :couleur="secondaryColor"
-        />
+        <GiantFlower class="e-propos__flower --mobile" :couleur="secondaryColor" />
       </div>
       <!--Text-->
       <p class="e-propos__text">
-        Le projet « Les Jours qui Passent » se concentre sur une fusion
-        harmonieuse entre la technologie moderne et la poésie intemporelle de la
-        condition humaine. Il s’agit d’un service web innovant qui permet à
-        l’utilisateur de se connecter avec sa propre histoire en lui offrant la
-        possibilité d’explorer le temps qu’il a passé sur cette Terre jusqu’à ce
-        moment précis. Ce voyage dans le temps personnel est accompagné
-        d’informations riches et fascinantes sur son jour de naissance et les
-        événements marquants qui ont façonné le monde au fil des années qu’il a
-        vécues sur cette Terre. Venez découvrir les merveilles de ce projet et
-        comment il peut transformer une simple date de naissance en une
-        expérience profondément poétique et enrichissante.
+        Le projet « Les Jours qui Passent » se concentre sur une fusion harmonieuse entre la
+        technologie moderne et la poésie intemporelle de la condition humaine. Il s’agit d’un
+        service web innovant qui permet à l’utilisateur de se connecter avec sa propre histoire en
+        lui offrant la possibilité d’explorer le temps qu’il a passé sur cette Terre jusqu’à ce
+        moment précis. Ce voyage dans le temps personnel est accompagné d’informations riches et
+        fascinantes sur son jour de naissance et les événements marquants qui ont façonné le monde
+        au fil des années qu’il a vécues sur cette Terre. Venez découvrir les merveilles de ce
+        projet et comment il peut transformer une simple date de naissance en une expérience
+        profondément poétique et enrichissante.
       </p>
       <!--Flower desktop-->
       <GiantFlower class="e-propos__flower" :couleur="secondaryColor" />
@@ -52,12 +47,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
       } else if (
@@ -170,7 +160,7 @@ export default {
 
     &.--mobile {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       height: 50%;
       width: 50%;
       @include medium-up {
@@ -195,14 +185,14 @@ export default {
 
   &__blockFlower {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   &__header {
     margin-right: rem(25);
     margin-top: rem(25);
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     @include medium-up {
       margin-right: rem(50);
       margin-top: rem(50);
