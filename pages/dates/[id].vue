@@ -14,10 +14,11 @@ export default {
   },
   setup() {
     // Variables de données
-    // const apodData = ref(null);
+    const apodData = ref(null);
     const dateFromURL = ref(null);
     const nazaBool = ref(true);
     const cinemaBool = ref(true);
+    const storyBool = ref(true);
     const FilterChoice = ref("");
     const FilterChoiceOpen = ref(false);
 
@@ -173,10 +174,11 @@ export default {
     });
 
     return {
-      // apodData,
+      apodData,
       dateFromURL,
       nazaBool,
       cinemaBool,
+      storyBool,
       primaryColor,
       secondaryColor,
       dayGet,
@@ -245,24 +247,24 @@ export default {
 
       // Appeler la méthode fetchApod après avoir récupéré la date
       this.fetchMovies(); // Ensure that fetchMovies is called only when dateFromURL is defined
-      // this.fetchApod();
+      this.fetchApod();
       this.fetchDB();
     }
   },
   methods: {
-    // async fetchApod() {
-    //   try {
-    //     if (this.dateFromURL) {
-    //       const response = await axios.get(
-    //         `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
-    //       );
-    //       this.apodData = response.data;
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching APOD:", error);
-    //     this.apodData = null;
-    //   }
-    // },
+    async fetchApod() {
+      try {
+        if (this.dateFromURL) {
+          const response = await axios.get(
+            `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
+          );
+          this.apodData = response.data;
+        }
+      } catch (error) {
+        console.error("Error fetching APOD:", error);
+        this.apodData = null;
+      }
+    },
 
     async fetchMovies() {
       try {
@@ -287,13 +289,29 @@ export default {
     },*/
     async fetchDB() {
       try {
-        const response = await axios.get(`https://api.ext.abzk.fr/search/21/07/1989`);
-        this.history = response.history.results;
+        console.log(`/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`);
+        const response = await axios.get(
+          `https://api.ext.abzk.fr/search/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`
+        );
+
+        this.history = response.data;
         console.log(this.history);
       } catch (error) {
         console.error("Error fetching history:", error);
         this.history = [];
       }
+    },
+
+    copyPageUrl() {
+      const url = window.location.href;
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          alert("Lien copié dans le presse-papiers !");
+        })
+        .catch((err) => {
+          console.error("Erreur lors de la copie du lien : ", err);
+        });
     },
   },
 };
@@ -327,21 +345,17 @@ export default {
     <div class="e-id__fleurs --semieronde">
       <fleur_semieronde id="3" @click="toggleBool('cinema', 'false')" :couleur="secondaryColor" />
     </div>
-    <div class="e-id__fleurs --ronde">
-      <fleur_ronde id="4" @click="toggleBool('music', 'false')" :couleur="secondaryColor" />
-    </div>
   </div>
+  <p class="histoire__ctnSubtitle">Cliquez pour afficher / masquer les données</p>
+
   <!--Picture of the day-->
-  <!--<div v-if="apodData && nazaBool" class="APOD">
+  <div v-if="apodData && nazaBool" class="APOD">
     <img class="APOD__img" :src="apodData.url" alt="NASA APOD" />
     <div>
       <h1 class="APOD__title">Image of the day</h1>
       <h3 class="APOD__name">
         <a
-          :href="
-            'https://www.google.com/search?q=' +
-            encodeURIComponent(apodData.title)
-          "
+          :href="'https://www.google.com/search?q=' + encodeURIComponent(apodData.title)"
           target="_blank"
           >{{ apodData.title }}</a
         >
@@ -349,7 +363,49 @@ export default {
 
       <p class="APOD__txt">{{ apodData.explanation }}</p>
     </div>
-  </div>-->
+  </div>
+
+  <!--Events DB-->
+  <div>
+    <div v-if="history && storyBool" class="histoire">
+      <h1 class="histoire__ctnTitle">Ce qu'il s'est passé le jour de votre naissance</h1>
+      <p class="histoire__ctnSubtitle">Faites défilez horizontalement</p>
+      <div class="scroll__container">
+        <div v-for="event in history" :key="event.id" class="scroll__item">
+          <div style="display: flex; justify-content: flex-end; position: relative">
+            <svg
+              style="position: absolute; top: 50%; transform: translateY(-50%)"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1380.5 144.22">
+              <path
+                class="cls-1"
+                d="M12.52,80.1c25.87-30.14,61.5-49.9,100.86-55.58,43.34-6.25,83.95,6.07,121.81,26.54,41.54,22.46,82.35,45.53,126.45,62.79,43.77,17.14,90.04,28.85,137.19,30.22,98.6,2.86,191.3-38.75,283.79-66.94,49.28-15.02,99.12-28.11,149-41.01,48.38-12.51,99.32-28.06,149.71-19.1,44.81,7.96,84.41,31.58,125.39,50.02,20.67,9.3,41.68,17.43,64.13,21.19,23.15,3.88,46.62,4.08,69.87.93,11.67-1.58,23.16-3.99,34.49-7.15,9.28-2.59,5.34-17.07-3.99-14.46-46.7,13.03-95.3,11.62-140.45-6.42-41.86-16.73-80.59-41.04-124.13-53.58-48.64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
+                :fill="secondaryColor" />
+            </svg>
+            <fleur_pointue
+              class="histoire__flower"
+              id="2"
+              :couleur="secondaryColor"
+              style="width: 300px; height: 300px" />
+          </div>
+          <div class="histoire__content">
+            <div>
+              <div class="histoire__subText">
+                <p class="histoire__subText--1">... durant l'année {{ event.annee }}</p>
+                <p class="histoire__subText--2" v-if="this.yearFromURL - event.annee < 0">
+                  vers le moment de vos {{ event.annee - this.yearFromURL }} ans
+                </p>
+                <p class="histoire__subText--3" v-if="this.yearFromURL - event.annee > 0">
+                  mais vous n'étiez pas encore né
+                </p>
+              </div>
+              <p class="histoire__txt">{{ event.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--Films sortis-->
   <div v-if="movies && cinemaBool" class="movies">
@@ -362,8 +418,10 @@ export default {
             style="position: absolute; top: 50%; transform: translateY(-50%)"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1380.5 144.22">
-            .64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
-            :fill="secondaryColor" />
+            <path
+              class="cls-1"
+              d="M12.52,80.1c25.87-30.14,61.5-49.9,100.86-55.58,43.34-6.25,83.95,6.07,121.81,26.54,41.54,22.46,82.35,45.53,126.45,62.79,43.77,17.14,90.04,28.85,137.19,30.22,98.6,2.86,191.3-38.75,283.79-66.94,49.28-15.02,99.12-28.11,149-41.01,48.38-12.51,99.32-28.06,149.71-19.1,44.81,7.96,84.41,31.58,125.39,50.02,20.67,9.3,41.68,17.43,64.13,21.19,23.15,3.88,46.62,4.08,69.87.93,11.67-1.58,23.16-3.99,34.49-7.15,9.28-2.59,5.34-17.07-3.99-14.46-46.7,13.03-95.3,11.62-140.45-6.42-41.86-16.73-80.59-41.04-124.13-53.58-48.64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
+              :fill="secondaryColor" />
           </svg>
           <fleur_semieronde
             class="movies__flower"
@@ -404,6 +462,15 @@ export default {
     :day="dayFromURL"
     :couleur="secondaryColor"
     class="e-id__age" />
+
+  <!-- Template HTML -->
+  <div class="share">
+    <p class="share__txt">
+      Partagez votre jour avec vos amis. Copiez le lien et partagez le où vous voulez.
+    </p>
+    <button class="share__btn" @click="copyPageUrl">Copier le lien</button>
+    <!-- Ajoutez d'autres boutons pour le partage sur les réseaux sociaux si nécessaire -->
+  </div>
 
   <!--Fenetre des filtres-->
   <div
@@ -743,6 +810,10 @@ export default {
   &__img {
     width: 100%;
     height: auto;
+
+    @include medium-up {
+      max-width: 50%;
+    }
   }
 }
 
@@ -782,6 +853,8 @@ export default {
   &__content {
     padding: rem(20);
     border: 2px solid v-bind(secondaryColor);
+    border-bottom-left-radius: rem(20);
+    border-bottom-right-radius: rem(20);
     margin: 20px;
     margin-top: rem(-150);
     background-color: v-bind(primaryColor);
@@ -819,6 +892,108 @@ export default {
 .scroll__item {
   flex: 0 0 auto; /* Les éléments enfants ne grandissent pas, ne rétrécissent pas, mais sont basés sur leur taille automatique */
   width: clamp(300px, 100%, 600px); /* ou toute autre largeur fixe */
+}
+
+.histoire {
+  margin: rem(100) rem(20);
+  color: v-bind(secondaryColor);
+  font-family: Urbanist;
+  font-weight: 600;
+
+  &__ctnTitle {
+    font-family: BrownSugar;
+    font-size: $big-font-size;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: rem(50);
+
+    @include medium-up {
+      font-size: $bigger-font-size;
+    }
+
+    @include large-up {
+      font-size: $giant-font-size;
+    }
+  }
+
+  &__ctnSubtitle {
+    font-family: Urbanist;
+    font-size: $regular-font-size;
+    color: v-bind(secondaryColor);
+    text-transform: uppercase;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: rem(50);
+  }
+
+  &__subText {
+    font-family: Urbanist;
+    font-size: $medium-font-size;
+    color: v-bind(secondaryColor);
+    font-style: italic;
+    margin-top: rem(150);
+    font-weight: 700;
+
+    &--1 {
+      margin-bottom: 0;
+    }
+
+    &--2 {
+      margin-top: 0;
+    }
+
+    &--3 {
+      margin-top: 0;
+    }
+  }
+
+  &__txt {
+    font-family: Urbanist;
+    font-size: $big-font-size;
+    color: v-bind(secondaryColor);
+    font-weight: 700;
+  }
+
+  &__content {
+    padding: rem(20);
+    border: 2px solid v-bind(secondaryColor);
+    border-bottom-left-radius: rem(20);
+    border-bottom-right-radius: rem(20);
+    margin: 20px;
+    margin-top: rem(-150);
+    background-color: v-bind(primaryColor);
+    z-index: 4;
+  }
+}
+
+/* Style CSS */
+.share {
+  margin: rem(-50) rem(20) rem(0) rem(20);
+  text-align: center;
+  margin-top: 20px;
+
+  &__txt {
+    font-family: Urbanist;
+    font-size: $regular-font-size;
+    color: v-bind(secondaryColor);
+    text-transform: uppercase;
+    font-style: italic;
+    text-align: center;
+  }
+
+  &__btn {
+    font-family: Urbanist;
+    font-size: $regular-font-size;
+    color: v-bind(primaryColor);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: rem(50);
+    background-color: v-bind(secondaryColor);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
 }
 
 a {

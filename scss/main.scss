@@ -1,26 +1,25 @@
 @import "/flatpickr.min.css";
 
-
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 body {
-    margin:0px;
-    padding: 0px;
-
+  margin: 0px;
+  padding: 0px;
 }
 
 @font-face {
-    font-family: 'BrownSugar';
-    src: url('/fonts/BrownSugar.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "BrownSugar";
+  src: url("/fonts/BrownSugar.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Urbanist';
-    src: url('/fonts/Urbanist-ExtraLight.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Urbanist";
+  src: url("/fonts/Urbanist-ExtraLight.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
