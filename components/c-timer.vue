@@ -1,9 +1,10 @@
 <template>
   <div>
     <p class="e-timer__text">
-      {{ elapsedTime.years }} ans {{ elapsedTime.months }} mois
-      {{ elapsedTime.days }} jours {{ elapsedTime.hours }} heures
-      {{ elapsedTime.minutes }} minutes {{ elapsedTime.seconds }} secondes
+      {{ elapsedTime.years }} ans {{ elapsedTime.months }} mois {{ elapsedTime.days }} jours <br />
+      {{ elapsedTime.hours }} heures {{ elapsedTime.minutes }} minutes
+      {{ elapsedTime.seconds }} secondes <br />
+      sur Terre.
     </p>
   </div>
 </template>
@@ -34,11 +35,7 @@ export default {
       const selectedMonth = parseInt(this.month);
       const selectedYear = parseInt(this.year);
 
-      const selectedDate = new Date(
-        selectedYear,
-        selectedMonth - 1,
-        selectedDay
-      );
+      const selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
       const currentDate = new Date();
 
       const elapsedMilliseconds = currentDate - selectedDate;
@@ -68,9 +65,7 @@ export default {
       let result = "";
 
       if (this.elapsedTime.years > 0) {
-        result += `${this.elapsedTime.years} an${
-          this.elapsedTime.years === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.years} an${this.elapsedTime.years === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.months > 0) {
@@ -78,27 +73,19 @@ export default {
       }
 
       if (this.elapsedTime.days > 0) {
-        result += `${this.elapsedTime.days} jour${
-          this.elapsedTime.days === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.days} jour${this.elapsedTime.days === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.hours > 0) {
-        result += `${this.elapsedTime.hours} heure${
-          this.elapsedTime.hours === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.hours} heure${this.elapsedTime.hours === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.minutes > 0) {
-        result += `${this.elapsedTime.minutes} minute${
-          this.elapsedTime.minutes === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.minutes} minute${this.elapsedTime.minutes === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.seconds > 0 || result === "") {
-        result += `${this.elapsedTime.seconds} seconde${
-          this.elapsedTime.seconds === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.seconds} seconde${this.elapsedTime.seconds === 1 ? "" : "s"}`;
       }
 
       return result;

@@ -338,16 +338,12 @@ export default {
      display: none;
     @include medium-up {
       display: block;
-      width: rem(80);
-      height: rem(25);
     }
     @include large-up {
-      width: rem(90);
-      height: rem(40);
+      
     }
     @include x-large-up {
-      width: rem(110);
-      height: rem(60);
+      
     }
   }
 

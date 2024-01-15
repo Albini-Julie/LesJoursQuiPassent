@@ -1,30 +1,15 @@
 <template>
   <!--Vidéo-->
-  <div @click="startVideoPlayback">
+  <div @click="startVideoPlayback" style="position: relative">
     <div ref="videoContainer" class="video-container">
       <video ref="videoRef">
-        <source
-          v-if="video == 'winter'"
-          src="/Fleurs_bleues.mp4"
-          type="video/mp4"
-        />
-        <source
-          v-else-if="video == 'spring'"
-          src="/Fleurs_roses.mp4"
-          type="video/mp4"
-        />
-        <source
-          v-else-if="video == 'summer'"
-          src="/FLEURS_BLANCHES.mp4"
-          type="video/mp4"
-        />
-        <source
-          v-else-if="video == 'automn'"
-          src="/Fleurs_marrons.mp4"
-          type="video/mp4"
-        />
+        <source v-if="video == 'winter'" src="/Fleurs_bleues.mp4" type="video/mp4" />
+        <source v-else-if="video == 'spring'" src="/Fleurs_roses.mp4" type="video/mp4" />
+        <source v-else-if="video == 'summer'" src="/FLEURS_BLANCHES.mp4" type="video/mp4" />
+        <source v-else-if="video == 'automn'" src="/Fleurs_marrons.mp4" type="video/mp4" />
       </video>
     </div>
+    <p class="absolute">Cliquez ici et défillez vers le bas</p>
   </div>
   <div class="intro">
     <!--Fleur de gauche-->
@@ -35,9 +20,8 @@
     <div class="e-intro">
       <logo class="e-intro__logo" :couleur="secondaryColor" />
       <h2 class="e-intro__title" :style="{ color: secondaryColor }">
-        <apostrophe class="e-intro__apo" :couleur="secondaryColor" /> Il est bon
-        de faire confiance au temps qui passe : l'avenir nous révèle toujours
-        ses secrets.
+        <apostrophe class="e-intro__apo" :couleur="secondaryColor" /> Il est bon de faire confiance
+        au temps qui passe : l'avenir nous révèle toujours ses secrets.
         <apostrophe class="e-intro__apo" :couleur="secondaryColor" />
       </h2>
     </div>
@@ -47,9 +31,7 @@
     </div>
   </div>
   <div class="e-intro__button">
-    <c-bouton :couleur="secondaryColor" href="/insert"
-      >Commencer l'expérience</c-bouton
-    >
+    <c-bouton :couleur="secondaryColor" href="/insert">Commencer l'expérience</c-bouton>
   </div>
   <div class="e-intro__button --little">
     <c-bouton size="small" :couleur="secondaryColor" href="/insert"
@@ -70,6 +52,14 @@ defineProps({
 });
 
 export default {
+  props: {
+    primaryColor: {
+      type: String,
+    },
+    secondaryColor: {
+      type: String,
+    },
+  },
   setup() {
     const videoContainer = ref(null);
     const videoRef = ref(null);
@@ -100,12 +90,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
         video.value = "winter";
@@ -277,5 +262,21 @@ video {
       margin-top: rem(50);
     }
   }
+}
+
+.absolute {
+  position: absolute;
+  top: 80%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  font-family: Urbanist;
+  font-size: $medium-font-size;
+  color: v-bind(secondaryColor);
+  font-style: italic;
+  font-weight: 700;
+  background-color: v-bind(primaryColor);
+  padding: rem(5) rem(10);
+  border-radius: rem(20);
+  text-align: center;
 }
 </style>
