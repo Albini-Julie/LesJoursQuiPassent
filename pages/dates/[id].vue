@@ -6,9 +6,15 @@ import { card_open } from "@/config.js";
 import { nazaBool, storyBool, cinemaBool, musicBool } from "@/config.js";
 
 export default {
+  data() {
+    return {
+      // Supposons que vous avez plusieurs films, chaque propriété est un booléen indiquant si le contenu est visible
+      contentVisible: {},
+    };
+  },
   setup() {
     // Variables de données
-    const apodData = ref(null);
+    // const apodData = ref(null);
     const dateFromURL = ref(null);
     const nazaBool = ref(true);
     const FilterChoice = ref("");
@@ -165,7 +171,7 @@ export default {
     });
 
     return {
-      apodData,
+      // apodData,
       dateFromURL,
       nazaBool,
       primaryColor,
@@ -236,23 +242,23 @@ export default {
 
       // Appeler la méthode fetchApod après avoir récupéré la date
       this.fetchMovies(); // Ensure that fetchMovies is called only when dateFromURL is defined
-      this.fetchApod();
+      // this.fetchApod();
     }
   },
   methods: {
-    async fetchApod() {
-      try {
-        if (this.dateFromURL) {
-          const response = await axios.get(
-            `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
-          );
-          this.apodData = response.data;
-        }
-      } catch (error) {
-        console.error("Error fetching APOD:", error);
-        this.apodData = null;
-      }
-    },
+    // async fetchApod() {
+    //   try {
+    //     if (this.dateFromURL) {
+    //       const response = await axios.get(
+    //         `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
+    //       );
+    //       this.apodData = response.data;
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching APOD:", error);
+    //     this.apodData = null;
+    //   }
+    // },
 
     async fetchMovies() {
       try {
@@ -312,7 +318,7 @@ export default {
     </div>
   </div>
   <!--Picture of the day-->
-  <div v-if="apodData && nazaBool" class="APOD">
+  <!-- <div v-if="apodData && nazaBool" class="APOD">
     <img class="APOD__img" :src="apodData.url" alt="NASA APOD" />
     <div>
       <h1 class="APOD__title">Image of the day</h1>
@@ -326,30 +332,30 @@ export default {
 
       <p class="APOD__txt">{{ apodData.explanation }}</p>
     </div>
-  </div>
+  </div> -->
 
   <!--Films sortis-->
   <div v-if="movies" class="movies">
     <h1 class="movies__ctnTitle">Films sortis cette année</h1>
     <div class="scroll__container">
       <div v-for="movie in movies" :key="movie.id" class="scroll__item">
-        <fleur_semieronde
-          class="movies__flower"
-          id="2"
-          :couleur="secondaryColor"
-          style="width: 300px; height: 300px" />
+        <div style="display: flex; justify-content: center">
+          <fleur_semieronde
+            class="movies__flower"
+            id="2"
+            :couleur="secondaryColor"
+            style="width: 300px; height: 300px" />
+        </div>
         <div>
           <div>
-            <p
-              class="movies__title"
-              style="margin-top: 50px; margin-bottom: 20px; font-weight: 800; font-size: 20px">
+            <p class="movies__title">
               {{ movie.title }}
             </p>
-            <p class="movies__description">{{ movie.overview }}</p>
             <p class="movies__date">
               <span style="font-weight: 800">Date de sortie</span> :
               {{ movie.release_date }}
             </p>
+            <p class="movies__description">{{ movie.overview }}</p>
           </div>
           <img
             class="movies__image"
@@ -714,12 +720,38 @@ export default {
 .movies {
   margin: rem(100) rem(20);
 
+  font-family: Urbanist;
+  font-weight: 600;
+
   &__ctnTitle {
     font-family: BrownSugar;
     font-size: $big-font-size;
     color: v-bind(secondaryColor);
     text-transform: uppercase;
     text-align: center;
+  }
+
+  &__title {
+    font-size: $big-font-size;
+    color: v-bind(secondaryColor);
+    margin-bottom: rem(20);
+    text-decoration: underline;
+  }
+
+  &__description {
+    font-size: $regular-font-size;
+    color: v-bind(secondaryColor);
+    margin-bottom: rem(20);
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  &__date {
+    font-size: $regular-font-size;
+    color: v-bind(secondaryColor);
+    margin-bottom: rem(20);
+    line-height: 1.4;
+    font-weight: 900;
   }
 }
 .scroll__container {
