@@ -1,5 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  render: {
+    etag: false,
+    static: {
+      etag: false
+    }
+  },
   routes: [
     {
       path: '/pages/dates/:date',
