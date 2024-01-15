@@ -47,6 +47,7 @@ const inverserCardOpen = () => {
 };
 
 const toggleBool = (theme, test) => {
+  console.log(theme);
   switch (theme) {
     case "naza":
       console.log("NazaBool :", nazaBool.value);
