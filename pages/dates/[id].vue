@@ -385,8 +385,8 @@ export default {
       />
     </div>
   </div>
-  <p class="histoire__ctnSubtitle">
-    Cliquez pour afficher / masquer les données
+  <p class="histoire__ctnSubtitle --title">
+    Cliquez sur les fleurs pour filtrer les données
   </p>
 
   <!--Picture of the day-->
@@ -519,6 +519,7 @@ export default {
             alt="Movie Poster"
             style="width: 60%; height: 60%"
           />
+          <MoviesDB class="movies__logo" />
         </div>
       </div>
     </div>
@@ -828,20 +829,23 @@ export default {
 
 .APOD {
   margin: rem(50) rem(20);
-
   font-family: Urbanist;
   font-weight: 600;
 
-  @include medium-up {
+  @include large-up {
     display: flex;
-    gap: rem(20);
+    flex-direction: column;
     text-align: left;
-    margin: rem(100) rem(20);
+    align-items: center;
+    margin: rem(100) rem(50);
   }
 
-  @include large-up {
-    max-width: rem(1000);
-    margin: rem(100) auto;
+  @include x-large-up {
+    display: flex;
+    flex-direction: row;
+    gap: rem(40);
+    text-align: left;
+    margin: rem(100) rem(50);
   }
 
   &__title {
@@ -876,7 +880,10 @@ export default {
     width: 100%;
     height: auto;
 
-    @include medium-up {
+    @include large-up {
+      width: 60%;
+    }
+    @include x-large-up {
       max-width: 50%;
     }
   }
@@ -949,6 +956,11 @@ export default {
     line-height: 1.4;
     font-weight: 900;
   }
+
+  &__logo {
+    margin: rem(0) rem(20);
+    width: 20%;
+  }
 }
 .scroll__container {
   display: flex;
@@ -989,6 +1001,13 @@ export default {
     font-style: italic;
     text-align: center;
     margin-bottom: rem(50);
+
+    &.--title {
+      display: none;
+      @include medium-up {
+        display: block;
+      }
+    }
   }
 
   &__subText {

@@ -246,8 +246,10 @@ export default {
   color: v-bind(secondaryColor);
   margin-bottom: 75px;
   text-align: center;
+  font-weight: 300;
   @include medium-up {
     font-size: $bigger-font-size;
+    font-weight: 600;
   }
   @include large-up {
     margin-bottom: 200px;
