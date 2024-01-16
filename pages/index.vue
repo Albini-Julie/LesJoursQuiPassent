@@ -1,5 +1,4 @@
 <template>
-  <!--Vidéo-->
   <div style="position: relative">
     <div ref="videoContainer" class="video-container">
       <video ref="videoRef" autoplay muted>
@@ -11,11 +10,9 @@
     </div>
   </div>
   <div class="intro">
-    <!--Fleur de gauche-->
     <div class="e-intro__fleur">
       <fleur :couleur="secondaryColor" />
     </div>
-    <!--Logo-->
     <div class="e-intro">
       <logo class="e-intro__logo" :couleur="secondaryColor" />
       <h2 class="e-intro__title" :style="{ color: secondaryColor }">
@@ -24,7 +21,6 @@
         <apostrophe class="e-intro__apo" :couleur="secondaryColor" />
       </h2>
     </div>
-    <!--Fleur de droite-->
     <div class="e-intro__fleur --rotate">
       <fleur :couleur="secondaryColor" />
     </div>
@@ -43,12 +39,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, defineProps } from "vue";
-
-defineProps({
-  primaryColor: String,
-  secondaryColor: String,
-});
+import { ref, onMounted, onUnmounted } from "vue";
 
 export default {
   props: {
@@ -67,13 +58,11 @@ export default {
     const handleIntersection = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // L'élément vidéo est visible, ajustez la vitesse de lecture
-          videoRef.value.playbackRate = entry.intersectionRatio; // Ajustez la vitesse en fonction de la partie visible
+          videoRef.value.playbackRate = entry.intersectionRatio;
         }
       });
     };
 
-    //Fonction pour importer les couleurs selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
     const video = ref("");
@@ -119,7 +108,6 @@ export default {
 
     onMounted(() => {
       setColor();
-      // Créer un observateur d'intersection
       observer = new IntersectionObserver(handleIntersection, {
         threshold: [0, 0.5, 1],
       });
@@ -128,7 +116,6 @@ export default {
         setColor();
       });
 
-      // Observer l'élément vidéo
       observer.observe(videoContainer.value);
     });
 
@@ -141,8 +128,6 @@ export default {
     };
   },
 };
-
-//Fonction pour gérer les couleurs selon les saisons
 </script>
 
 <style lang="scss" scoped>
@@ -154,7 +139,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black; /* Couleur de fond pendant le défilement */
+  background-color: black;
   overflow: hidden;
 }
 

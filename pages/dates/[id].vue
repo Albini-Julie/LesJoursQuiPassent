@@ -8,21 +8,25 @@ import { nazaBool, storyBool, cinemaBool, musicBool } from "@/config.js";
 export default {
   data() {
     return {
-      // Supposons que vous avez plusieurs films, chaque propriété est un booléen indiquant si le contenu est visible
       contentVisible: {},
       history: [],
       movies: [],
+      yearFromURL: null,
+      dayFromURL: null,
+      monthFromURL: null,
+      monthFromURL_before: null,
     };
   },
+  props: {
+    couleur: String,
+  },
   setup() {
-    // Variables de données
     const apodData = ref(null);
     const dateFromURL = ref(null);
 
     const FilterChoice = ref("");
     const FilterChoiceOpen = ref(false);
 
-    // Couleur Secondary et Primary selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
     const dateGet = new Date();
@@ -32,7 +36,7 @@ export default {
     const yearGet = dateGet.getFullYear();
     const movies = [];
     const history = [];
-    const imageBaseURL = "https://image.tmdb.org/t/p/w500"; // Base URL for movie images
+    const imageBaseURL = "https://image.tmdb.org/t/p/w500";
 
     if (monthGet == 1) {
       monthF.value = "Janvier";
@@ -98,36 +102,28 @@ export default {
     const toggleBool = (theme, test) => {
       switch (theme) {
         case "naza":
-          console.log("NazaBool :", nazaBool.value);
           nazaBool.value = !nazaBool.value;
           if (test == "true") {
             card_open.value = !card_open.value;
           }
-          console.log("NazaBool :", nazaBool.value);
           return nazaBool.value;
         case "story":
-          console.log("StoryBool :", storyBool.value);
           storyBool.value = !storyBool.value;
           if (test == "true") {
             card_open.value = !card_open.value;
           }
-          console.log("StoryBool :", storyBool.value);
           return storyBool.value;
         case "cinema":
-          console.log("CinemaBool :", cinemaBool.value);
           cinemaBool.value = !cinemaBool.value;
           if (test == "true") {
             card_open.value = !card_open.value;
           }
-          console.log("CinemaBool :", cinemaBool.value);
           return cinemaBool.value;
         case "music":
-          console.log("MusicBool :", musicBool.value);
           musicBool.value = !musicBool.value;
           if (test == "true") {
             card_open.value = !card_open.value;
           }
-          console.log("MusicBool :", musicBool.value);
           return musicBool.value;
       }
     };
@@ -136,29 +132,24 @@ export default {
       return filter_open.value === true;
     };
 
-    // Ajoutez une méthode pour inverser la valeur de Card_open
     const inverserCardOpen = (num) => {
       card_open.value = !card_open.value;
       switch (num) {
         case 1:
           FilterChoice.value = "naza";
-          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 2:
           FilterChoice.value = "histoire";
-          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 3:
           FilterChoice.value = "cinema";
 
-          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 4:
           FilterChoice.value = "musique";
-          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
       }
@@ -194,30 +185,20 @@ export default {
   },
 
   mounted() {
-    // Récupérer l'URL complète
     const urlString = window.location.href;
     const url = new URL(urlString);
 
-    // Accéder au chemin (pathname) de l'URL
     const pathname = url.pathname;
 
-    // Utiliser une expression régulière pour extraire la date du chemin
     const match = pathname.match(/\/dates\/(\d{4}-\d{2}-\d{2})/);
 
-    // Vérifier si la correspondance a réussi et récupérer la date
     this.dateFromURL = match ? match[1] : null;
 
-    // Décomposer la date en année, mois et jour
     if (this.dateFromURL) {
       const [year, month, day] = this.dateFromURL.split("-");
       this.yearFromURL = parseInt(year, 10);
       this.monthFromURL_before = parseInt(month, 10);
       this.dayFromURL = parseInt(day, 10);
-
-      // Ajoutez des déclarations de console.log pour déboguer
-      console.log("Year:", this.yearFromURL);
-      console.log("Month before:", this.monthFromURL_before);
-      console.log("Day:", this.dayFromURL);
 
       if (this.monthFromURL_before == 1) {
         this.monthFromURL = "Janvier";
@@ -245,8 +226,7 @@ export default {
         this.monthFromURL = "Décembre";
       }
 
-      // Appeler la méthode fetchApod après avoir récupéré la date
-      this.fetchMovies(); // Ensure that fetchMovies is called only when dateFromURL is defined
+      this.fetchMovies();
       this.fetchApod();
       this.fetchDB();
     }
@@ -254,19 +234,15 @@ export default {
   methods: {
     async fetchApod() {
       try {
-        // Vérifier si l'année est supérieure à 1995
         if (this.yearFromURL > 1995) {
           const response = await axios.get(
             `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
           );
           this.apodData = response.data;
         } else {
-          // Gérer le cas où l'année est 1995 ou moins
-          this.apodData = null; // ou toute autre logique appropriée
-          console.log("Pas de données APOD disponibles avant 1996");
+          this.apodData = null;
         }
       } catch (error) {
-        console.error("Error fetching APOD:", error);
         this.apodData = null;
       }
     },
@@ -277,32 +253,21 @@ export default {
           `https://api.themoviedb.org/3/discover/movie?api_key=8e0a1d9f7eb0d1d657ea7de87fd35e87&primary_release_year=${this.yearFromURL}&language=fr-FR`
         );
         this.movies = response.data.results;
-        console.log(this.movies);
       } catch (error) {
-        console.error("Error fetching movies:", error);
         this.movies = [];
       }
     },
     getImageUrl(path) {
       return path ? `https://image.tmdb.org/t/p/w500${path}` : "";
     },
-    /*getImageUrl(path) {
-      const urlString = window.location.href;
-      const url = new URL(urlString);
-      return path ? url + path : ""; // Concatenate with base URL
-      //return path ? this.imageBaseURL + path : ""; // Concatenate with base URL
-    },*/
+
     async fetchDB() {
       try {
-        console.log(`/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`);
         const response = await axios.get(
           `https://api.ext.abzk.fr/search/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`
         );
-
         this.history = response.data;
-        console.log(this.history);
       } catch (error) {
-        console.error("Error fetching history:", error);
         this.history = [];
       }
     },
@@ -314,16 +279,13 @@ export default {
         .then(() => {
           alert("Lien copié dans le presse-papiers !");
         })
-        .catch((err) => {
-          console.error("Erreur lors de la copie du lien : ", err);
-        });
+        .catch((err) => {});
     },
   },
 };
 </script>
 
 <template>
-  <!--Header-->
   <c-header filtre />
   <div class="e-id__trait">
     <c-trait
@@ -332,14 +294,14 @@ export default {
       :day="dayFromURL"
       :month="monthFromURL" />
   </div>
-  <!--Timer-->
+
   <c-timer
     :year="yearFromURL"
     :day="dayFromURL"
     :month="monthFromURL_before"
     :couleur="secondaryColor"
     class="e-id__timer" />
-  <!--Fleurs de filtrage-->
+
   <div class="e-id__fleurs">
     <div class="e-id__fleurs --semieronde2">
       <fleur_semieronde2 id="1" @click="toggleBool('naza', 'false')" :couleur="secondaryColor" />
@@ -353,7 +315,6 @@ export default {
   </div>
   <p class="histoire__ctnSubtitle --title">Cliquez sur les fleurs pour filtrer les données</p>
 
-  <!--Picture of the day-->
   <div v-if="apodData && nazaBool" class="APOD">
     <img class="APOD__img" :src="apodData.url" alt="NASA APOD" />
     <div>
@@ -365,12 +326,10 @@ export default {
           >{{ apodData.title }}</a
         >
       </h3>
-
       <p class="APOD__txt">{{ apodData.explanation }}</p>
     </div>
   </div>
 
-  <!--Events DB-->
   <div>
     <div v-if="history && storyBool" class="histoire">
       <h1 class="histoire__ctnTitle">Ce qu'il s'est passé le jour de votre naissance</h1>
@@ -412,7 +371,6 @@ export default {
     </div>
   </div>
 
-  <!--Films sortis-->
   <div v-if="movies && cinemaBool" class="movies">
     <h1 class="movies__ctnTitle">Films sortis cette année</h1>
     <p class="movies__ctnSubtitle">Faites défilez horizontalement</p>
@@ -461,7 +419,6 @@ export default {
     </div>
   </div>
 
-  <!--Calculateur d'âge-->
   <c-age
     :year="yearFromURL"
     :month="monthFromURL_before"
@@ -469,25 +426,20 @@ export default {
     :couleur="secondaryColor"
     class="e-id__age" />
 
-  <!-- Template HTML -->
   <div class="share">
     <p class="share__txt">
       Partagez votre jour avec vos amis. Copiez le lien et partagez le où vous voulez.
     </p>
     <button class="share__btn" @click="copyPageUrl">Copier le lien</button>
-    <!-- Ajoutez d'autres boutons pour le partage sur les réseaux sociaux si nécessaire -->
   </div>
 
-  <!--Fenetre des filtres-->
   <div
     class="invisible"
     :class="{
       efilter: isFilterOpen(),
       visible: isFilterOpen(),
       animation: isFilterOpen(),
-      //inverse: !isFilterOpen(),
     }">
-    <!-- Contenu de la fenêtre -->
     <c-header croix :couleur="secondaryColor" />
     <div class="e-id__trait">
       <c-trait
@@ -597,7 +549,6 @@ export default {
     }
 
     &.--semieronde2:hover::before {
-      /* Afficher le message au survol */
       content: "Image of the day by NAZA";
       display: block;
       position: absolute;
@@ -610,13 +561,12 @@ export default {
       font-weight: 500;
       padding: 5px;
       border-radius: 5px;
-      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-top: -25px;
       margin-left: 10px;
-      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      z-index: 1;
       margin-top: rem(-40);
     }
     &.--semieronde:hover::before {
-      /* Afficher le message au survol */
       content: "Cinéma";
       display: block;
       position: absolute;
@@ -629,13 +579,12 @@ export default {
       font-weight: 500;
       padding: 5px;
       border-radius: 5px;
-      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-top: -25px;
       margin-left: 10px;
-      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      z-index: 1;
       margin-top: rem(-40);
     }
     &.--ronde:hover::before {
-      /* Afficher le message au survol */
       content: "Musique";
       display: block;
       position: absolute;
@@ -648,13 +597,12 @@ export default {
       font-weight: 500;
       padding: 5px;
       border-radius: 5px;
-      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-top: -25px;
       margin-left: 10px;
-      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      z-index: 1;
       margin-top: rem(-40);
     }
     &.--pointue:hover::before {
-      /* Afficher le message au survol */
       content: "Histoire";
       display: block;
       position: absolute;
@@ -667,9 +615,9 @@ export default {
       font-weight: 500;
       padding: 5px;
       border-radius: 5px;
-      margin-top: -25px; /* Ajustez la position du message selon vos besoins */
+      margin-top: -25px;
       margin-left: 10px;
-      z-index: 1; /* Assurez-vous que le message est au-dessus de l'élément */
+      z-index: 1;
       margin-top: rem(-40);
     }
   }
@@ -678,8 +626,6 @@ export default {
     margin-top: rem(20);
   }
 }
-
-//Style de la fenêtre des filtres
 
 .invisible {
   display: none;
@@ -723,7 +669,7 @@ export default {
 }
 
 .visible {
-  top: 0; /* Déplacez la fenêtre vers le haut pour la rendre visible */
+  top: 0;
 }
 
 .animation {
@@ -739,20 +685,6 @@ export default {
   }
 }
 
-// Fenetre qui s'en va avec animation
-/*.inverse {
-  animation: retour 2s forwards;
-}
-
-@keyframes retour {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}*/
-
 .APOD {
   margin: rem(50) rem(20);
   font-family: Urbanist;
@@ -760,7 +692,7 @@ export default {
 
   @include large-up {
     display: flex;
-    flex-direction: column;
+    gap: rem(50);
     text-align: left;
     align-items: center;
     margin: rem(100) rem(50);
@@ -890,11 +822,11 @@ export default {
 }
 .scroll__container {
   display: flex;
-  overflow-x: auto; /* Permet le défilement horizontal */
+  overflow-x: auto;
 }
 .scroll__item {
-  flex: 0 0 auto; /* Les éléments enfants ne grandissent pas, ne rétrécissent pas, mais sont basés sur leur taille automatique */
-  width: clamp(300px, 100%, 600px); /* ou toute autre largeur fixe */
+  flex: 0 0 auto;
+  width: clamp(300px, 100%, 600px);
 }
 
 .histoire {
@@ -976,7 +908,6 @@ export default {
   }
 }
 
-/* Style CSS */
 .share {
   margin: rem(-50) rem(20) rem(0) rem(20);
   text-align: center;

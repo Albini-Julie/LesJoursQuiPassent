@@ -3,16 +3,13 @@
     <div class="e-propos__header">
       <croix @click="retourPagePrecedente" :couleur="secondaryColor" />
     </div>
-    <!--Title-->
     <div class="e-propos__title">
       <h2>À propos</h2>
     </div>
     <div class="e-propos__content">
-      <!--Flower mobile-->
       <div class="e-propos__blockFlower">
         <GiantFlower class="e-propos__flower --mobile" :couleur="secondaryColor" />
       </div>
-      <!--Text-->
       <p class="e-propos__text">
         Le projet « Les Jours qui Passent » se concentre sur une fusion harmonieuse entre la
         technologie moderne et la poésie intemporelle de la condition humaine. Il s’agit d’un
@@ -24,7 +21,6 @@
         projet et comment il peut transformer une simple date de naissance en une expérience
         profondément poétique et enrichissante.
       </p>
-      <!--Flower desktop-->
       <GiantFlower class="e-propos__flower" :couleur="secondaryColor" />
     </div>
   </div>
@@ -32,7 +28,7 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {

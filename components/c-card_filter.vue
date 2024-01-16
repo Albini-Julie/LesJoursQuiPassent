@@ -40,7 +40,6 @@ defineProps({
   filterChoice: String,
 });
 
-// Ajoutez une méthode pour inverser la valeur de Card_open
 const inverserCardOpen = () => {
   card_open.value = !card_open.value;
   console.log("Card_open", card_open.value);

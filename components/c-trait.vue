@@ -1,10 +1,12 @@
 <script setup>
 defineProps({
   couleur: String,
-  day: String,
+  day: Number,
   month: String,
-  year: String,
+  year: Number,
 });
+
+const dayFromURL = ref(null);
 </script>
 
 <template>

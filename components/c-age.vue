@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="text">
-      <span class="text --number">{{ elapsedTime.years }}</span> ans
+      <span class="text__number">{{ elapsedTime.years }}</span> ans
     </p>
   </div>
 </template>
@@ -9,9 +9,9 @@
 <script>
 export default {
   props: {
-    day: String,
-    month: String,
-    year: String,
+    day: Number,
+    month: Number,
+    year: Number,
     couleur: String,
   },
   data() {
@@ -32,11 +32,7 @@ export default {
       const selectedMonth = parseInt(this.month);
       const selectedYear = parseInt(this.year);
 
-      const selectedDate = new Date(
-        selectedYear,
-        selectedMonth - 1,
-        selectedDay
-      );
+      const selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
       const currentDate = new Date();
 
       const elapsedMilliseconds = currentDate - selectedDate;
@@ -44,11 +40,11 @@ export default {
       const elapsedMinutes = Math.floor(elapsedSeconds / 60);
       const elapsedHours = Math.floor(elapsedMinutes / 60);
       const elapsedDays = Math.floor(elapsedHours / 24);
-      const elapsedMonths = Math.floor(elapsedDays / 30.44); // Average number of days in a month
+      const elapsedMonths = Math.floor(elapsedDays / 30.44);
       const elapsedYears = Math.floor(elapsedMonths / 12);
 
       const remainingMonths = elapsedMonths % 12;
-      const remainingDays = Math.floor(elapsedDays % 30.44); // Use Math.floor to avoid decimal values
+      const remainingDays = Math.floor(elapsedDays % 30.44);
       const remainingHours = Math.floor(elapsedHours % 24);
       const remainingMinutes = Math.floor(elapsedMinutes % 60);
       const remainingSeconds = Math.floor(elapsedSeconds % 60);
@@ -66,9 +62,7 @@ export default {
       let result = "";
 
       if (this.elapsedTime.years > 0) {
-        result += `${this.elapsedTime.years} an${
-          this.elapsedTime.years === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.years} an${this.elapsedTime.years === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.months > 0) {
@@ -76,27 +70,19 @@ export default {
       }
 
       if (this.elapsedTime.days > 0) {
-        result += `${this.elapsedTime.days} jour${
-          this.elapsedTime.days === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.days} jour${this.elapsedTime.days === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.hours > 0) {
-        result += `${this.elapsedTime.hours} heure${
-          this.elapsedTime.hours === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.hours} heure${this.elapsedTime.hours === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.minutes > 0) {
-        result += `${this.elapsedTime.minutes} minute${
-          this.elapsedTime.minutes === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.minutes} minute${this.elapsedTime.minutes === 1 ? "" : "s"}`;
       }
 
       if (this.elapsedTime.seconds > 0 || result === "") {
-        result += `${this.elapsedTime.seconds} seconde${
-          this.elapsedTime.seconds === 1 ? "" : "s"
-        }`;
+        result += `${this.elapsedTime.seconds} seconde${this.elapsedTime.seconds === 1 ? "" : "s"}`;
       }
 
       return result;
@@ -104,13 +90,11 @@ export default {
   },
   mounted() {
     this.calculateTimeElapsed();
-    // You may want to update the elapsed time periodically, for example, every second
     this.timer = setInterval(() => {
       this.calculateTimeElapsed();
     }, 1000);
   },
   beforeDestroy() {
-    // Clear the interval when the component is destroyed
     clearInterval(this.timer);
   },
 };
@@ -122,7 +106,7 @@ export default {
   font-family: $secondary-font-family;
   font-size: $big-font-size;
 
-  &.--number {
+  &__number {
     font-size: $giant-font-size;
   }
 }

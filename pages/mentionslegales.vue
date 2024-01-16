@@ -3,21 +3,18 @@
     <div class="e-mentions__header">
       <croix @click="retourPagePrecedente" :couleur="secondaryColor" />
     </div>
-    <!--Title-->
+
     <div class="e-mentions__Blocktitle">
       <h2 class="e-mentions__title">Mentions légales</h2>
     </div>
-    <!--Petites fleurs mobles-->
+
     <div class="e-mentions__littleFlower">
       <FleurSemieronde :couleur="secondaryColor" />
       <FleurRonde :couleur="secondaryColor" />
     </div>
 
-    <!--Partie 1 (content 1 + fleur 1)-->
     <div class="e-mentions__content">
-      <!--Flower desktop-->
       <GiantFlower2 class="e-mentions__flower --2" :couleur="secondaryColor" />
-      <!--Text-->
       <div class="e-mentions__Blocktext">
         <p class="e-mentions__Contenttext" style="text-decoration: underline">
           Projet "Les Jours Qui Passent" du département MMI de Montbéliard
@@ -56,9 +53,7 @@
       </div>
     </div>
 
-    <!--Partie 2 (Content 2 et fleur 2)-->
     <div class="e-mentions__content --2">
-      <!--Text-->
       <div class="e-mentions__Blocktext --2">
         <p class="e-mentions__Contenttext --top" style="text-decoration: underline">
           Collecte et Utilisation des Données Personnelles :
@@ -103,7 +98,6 @@
           nous contacter à lesjoursquipassentcontact@gmail.com.
         </p>
       </div>
-      <!--Flower desktop-->
       <GiantFlower class="e-mentions__flower" :couleur="secondaryColor" />
     </div>
     <div class="e-mentions__littleFlower">
@@ -115,7 +109,7 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {

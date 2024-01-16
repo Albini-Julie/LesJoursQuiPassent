@@ -1,54 +1,38 @@
 <template>
   <c-header :couleur="secondaryColor" />
-  <!--Date du jour-->
+
   <div class="trait">
-    <c-trait
-      :couleur="secondaryColor"
-      :day="dayGet"
-      :month="monthF"
-      :year="yearGet"
-    />
+    <c-trait :couleur="secondaryColor" :day="dayGet" :month="monthF" :year="yearGet" />
   </div>
 
-  <!--Citation-->
   <div class="quote">
-    <p class="quote__content">
+    <div class="quote__content">
       <apostrophe class="quote__apo" :couleur="secondaryColor" />
       <p class="quote__text">{{ quoteText }}</p>
       <apostrophe class="quote__apo" :couleur="secondaryColor" />
-    </p>
+    </div>
     <div class="quote__author">
       <p class="quote__text">{{ quoteAuthor }}</p>
     </div>
   </div>
-  <!--Titre-->
+
   <h2 class="titleh2">Indiquez votre date de naissance :</h2>
-  <!--Champ d'entrée-->
+
   <div class="input">
-    <input
-      type="text"
-      v-model="selectedDate"
-      class="e-input"
-      placeholder="année-mois-jour"
-    />
+    <input type="text" v-model="selectedDate" class="e-input" placeholder="année-mois-jour" />
   </div>
-  <!--Boutons-->
+
   <div class="button">
-    <c-bouton
-      :couleur="secondaryColor"
-      @click="redirectToDatesPage(selectedDate)"
+    <c-bouton :couleur="secondaryColor" @click="redirectToDatesPage(selectedDate)"
       >Commencer</c-bouton
     >
   </div>
   <div class="button --little">
-    <c-bouton
-      size="small"
-      :couleur="secondaryColor"
-      @click="redirectToDatesPage(selectedDate)"
+    <c-bouton size="small" :couleur="secondaryColor" @click="redirectToDatesPage(selectedDate)"
       >Commencer</c-bouton
     >
   </div>
-  <!--Footer-->
+
   <c-footer :couleur="secondaryColor" />
 </template>
 
@@ -59,35 +43,26 @@ export default {
   setup() {
     const quoteText = ref("");
     const quoteAuthor = ref("");
-    //Fonction citation
+
     const fetchDataFromApi = async () => {
       try {
         const response = await fetch("https://api.quotable.io/random");
         const quote = await response.json();
 
-        // Output the quote and author name
         quoteText.value = quote.content;
         quoteAuthor.value = quote.author;
-        console.log(quote.content);
-        console.log(`- ${quote.author}`);
-      } catch (error) {
-        console.error("Error fetching random quote:", error);
-      }
+      } catch (error) {}
     };
-    //redirection vers la page de la date
+
     function redirectToDatesPage(date) {
-      console.log(date);
-      const userInput = date; // Remplacez cela par la valeur de votre champ de saisie
+      const userInput = date;
       if (isValidDate(userInput)) {
         const url = `/dates/${date}`;
-        // Effectuer la redirection
         window.location.href = url;
       } else {
-        // Fenêtre d'alerte personnalisée
         const errorMessage = "La date n'est pas valide.";
         const alertStyle = "background-color: #8B0000; color: #FFFFFF;";
 
-        // Afficher la fenêtre d'alerte personnalisée
         showAlert(errorMessage, alertStyle);
       }
     }
@@ -110,7 +85,6 @@ export default {
       alertContainer.appendChild(alertMessage);
       document.body.appendChild(alertContainer);
 
-      // Supprimer la fenêtre d'alerte après un certain délai (par exemple, 3 secondes)
       setTimeout(() => {
         document.body.removeChild(alertContainer);
       }, 3000);
@@ -119,18 +93,13 @@ export default {
     function isValidDate(dateString) {
       const dateObject = new Date(dateString);
 
-      // Vérifier si la conversion a réussi et que la date reste valide
       const isDateValid = !isNaN(dateObject.getTime());
 
-      // Vérifier si l'année est entre 1930 et l'année actuelle
       const isYearValid =
-        dateObject.getFullYear() >= 1930 &&
-        dateObject.getFullYear() <= new Date().getFullYear();
+        dateObject.getFullYear() >= 1930 && dateObject.getFullYear() <= new Date().getFullYear();
 
       return isDateValid && isYearValid;
     }
-
-    // Couleur Secondary et Primary selon les saisons
 
     const primaryColor = ref("");
     const secondaryColor = ref("");
@@ -171,12 +140,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
       } else if (
@@ -310,25 +274,24 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 
   &__content {
-    display: flex;  
-    gap:20px;
+    display: flex;
+    gap: 20px;
     justify-content: center;
     margin-right: rem(20);
     margin-left: rem(20);
-    @include medium-up{
-      margin-left:50px;
-      margin-right:50px
+    @include medium-up {
+      margin-left: 50px;
+      margin-right: 50px;
     }
-    @include large-up{
-      margin-left:100px;
-      margin-right:100px
+    @include large-up {
+      margin-left: 100px;
+      margin-right: 100px;
     }
     @include x-large-up {
-      margin-left:0px;
-      margin-right:0px;
+      margin-left: 0px;
+      margin-right: 0px;
       text-align: start;
       margin-right: 0;
       margin-left: 0;
@@ -337,15 +300,13 @@ export default {
   }
 
   &__apo {
-     display: none;
+    display: none;
     @include medium-up {
       display: block;
     }
     @include large-up {
-      
     }
     @include x-large-up {
-      
     }
   }
 

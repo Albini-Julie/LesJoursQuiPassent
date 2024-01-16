@@ -12,9 +12,9 @@
 <script>
 export default {
   props: {
-    day: String,
-    month: String,
-    year: String,
+    day: Number,
+    month: Number,
+    year: Number,
     couleur: String,
   },
   data() {
@@ -43,11 +43,11 @@ export default {
       const elapsedMinutes = Math.floor(elapsedSeconds / 60);
       const elapsedHours = Math.floor(elapsedMinutes / 60);
       const elapsedDays = Math.floor(elapsedHours / 24);
-      const elapsedMonths = Math.floor(elapsedDays / 30.44); // Average number of days in a month
+      const elapsedMonths = Math.floor(elapsedDays / 30.44);
       const elapsedYears = Math.floor(elapsedMonths / 12);
 
       const remainingMonths = elapsedMonths % 12;
-      const remainingDays = Math.floor(elapsedDays % 30.44); // Use Math.floor to avoid decimal values
+      const remainingDays = Math.floor(elapsedDays % 30.44);
       const remainingHours = Math.floor(elapsedHours % 24);
       const remainingMinutes = Math.floor(elapsedMinutes % 60);
       const remainingSeconds = Math.floor(elapsedSeconds % 60);
@@ -93,13 +93,11 @@ export default {
   },
   mounted() {
     this.calculateTimeElapsed();
-    // You may want to update the elapsed time periodically, for example, every second
     this.timer = setInterval(() => {
       this.calculateTimeElapsed();
     }, 1000);
   },
   beforeDestroy() {
-    // Clear the interval when the component is destroyed
     clearInterval(this.timer);
   },
 };

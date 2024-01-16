@@ -6,7 +6,6 @@ const props = defineProps({
   href: String,
 });
 
-//Création d'une constante className qui va retourner un nom de classe différent selon la valeur des propriétés variant, size et icon
 const className = computed(
   () =>
     `button

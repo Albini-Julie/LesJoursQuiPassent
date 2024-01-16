@@ -1,11 +1,12 @@
 <script>
-import { ref, onMounted, onUnmounted, defineProps } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { filter_open } from "@/config.js";
 
 export default {
   props: {
     filtre: Boolean,
     croix: Boolean,
+    couleur: String,
   },
 
   setup(props) {
@@ -18,12 +19,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
         icons.value = "winter";
@@ -80,68 +76,37 @@ export default {
 
 <template>
   <div class="header">
-    <!--Logo du site-->
-    <nuxt-link class="e-header__link" to="/"
-      ><logo_2 :couleur="secondaryColor"
-    /></nuxt-link>
-    <!--Logo de la saison en ordi-->
-    <automn
-      class="e-header__icon"
-      v-if="icons === 'automn'"
-      :couleur="secondaryColor"
-    />
-    <spring
-      class="e-header__icon"
-      v-else-if="icons === 'spring'"
-      :couleur="secondaryColor"
-    />
-    <summer
-      class="e-header__icon"
-      v-else-if="icons === 'summer'"
-      :couleur="secondaryColor"
-    />
-    <winter
-      class="e-header__icon"
-      v-else-if="icons === 'winter'"
-      :couleur="secondaryColor"
-    />
-    <!--Logo en plus-->
+    <nuxt-link class="e-header__link" to="/"><logo_2 :couleur="secondaryColor" /></nuxt-link>
+    <automn class="e-header__icon" v-if="icons === 'automn'" :couleur="secondaryColor" />
+    <spring class="e-header__icon" v-else-if="icons === 'spring'" :couleur="secondaryColor" />
+    <summer class="e-header__icon" v-else-if="icons === 'summer'" :couleur="secondaryColor" />
+    <winter class="e-header__icon" v-else-if="icons === 'winter'" :couleur="secondaryColor" />
     <croix
       v-if="croix"
       @click="funcFilter"
       class="e-header__icon --phone"
-      :couleur="secondaryColor"
-    />
+      :couleur="secondaryColor" />
     <filtre
       @click="funcFilter"
       v-else-if="filtre"
       class="e-header__icon --phone"
-      :couleur="secondaryColor"
-    />
+      :couleur="secondaryColor" />
     <croix :couleur="primaryColor" class="e-header__icon" />
   </div>
   <div class="e-header__boxicons">
-    <!--Logo de la saison-->
-    <automn
-      class="e-header__icon --phone"
-      v-if="icons === 'automn'"
-      :couleur="secondaryColor"
-    />
+    <automn class="e-header__icon --phone" v-if="icons === 'automn'" :couleur="secondaryColor" />
     <spring
       class="e-header__icon --phone"
       v-else-if="icons === 'spring'"
-      :couleur="secondaryColor"
-    />
+      :couleur="secondaryColor" />
     <summer
       class="e-header__icon --phone"
       v-else-if="icons === 'summer'"
-      :couleur="secondaryColor"
-    />
+      :couleur="secondaryColor" />
     <winter
       class="e-header__icon --phone"
       v-else-if="icons === 'winter'"
-      :couleur="secondaryColor"
-    />
+      :couleur="secondaryColor" />
   </div>
 </template>
 
@@ -165,6 +130,10 @@ export default {
 
   &__icon {
     display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
     @include only-small {
       display: none;
     }
