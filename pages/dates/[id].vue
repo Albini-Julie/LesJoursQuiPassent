@@ -10,6 +10,8 @@ export default {
     return {
       // Supposons que vous avez plusieurs films, chaque propriété est un booléen indiquant si le contenu est visible
       contentVisible: {},
+      history: [],
+      movies: [],
     };
   },
   setup() {
@@ -63,12 +65,7 @@ export default {
       const day = date.getDate();
       const month = date.getMonth() + 1;
 
-      if (
-        (month === 12 && day >= 21) ||
-        month === 1 ||
-        month === 2 ||
-        (month === 3 && day < 21)
-      ) {
+      if ((month === 12 && day >= 21) || month === 1 || month === 2 || (month === 3 && day < 21)) {
         primaryColor.value = "#FFFFFF";
         secondaryColor.value = "#4359AA";
       } else if (
@@ -145,43 +142,23 @@ export default {
       switch (num) {
         case 1:
           FilterChoice.value = "naza";
-          console.log(
-            "FilterChoice: ",
-            FilterChoiceOpen.value,
-            "Card_open: ",
-            card_open.value
-          );
+          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 2:
           FilterChoice.value = "histoire";
-          console.log(
-            "FilterChoice: ",
-            FilterChoiceOpen.value,
-            "Card_open: ",
-            card_open.value
-          );
+          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 3:
           FilterChoice.value = "cinema";
 
-          console.log(
-            "FilterChoice: ",
-            FilterChoiceOpen.value,
-            "Card_open: ",
-            card_open.value
-          );
+          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
         case 4:
           FilterChoice.value = "musique";
-          console.log(
-            "FilterChoice: ",
-            FilterChoiceOpen.value,
-            "Card_open: ",
-            card_open.value
-          );
+          console.log("FilterChoice: ", FilterChoiceOpen.value, "Card_open: ", card_open.value);
           return card_open.value;
           break;
       }
@@ -277,11 +254,16 @@ export default {
   methods: {
     async fetchApod() {
       try {
-        if (this.dateFromURL) {
+        // Vérifier si l'année est supérieure à 1995
+        if (this.yearFromURL > 1995) {
           const response = await axios.get(
             `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.dateFromURL}`
           );
           this.apodData = response.data;
+        } else {
+          // Gérer le cas où l'année est 1995 ou moins
+          this.apodData = null; // ou toute autre logique appropriée
+          console.log("Pas de données APOD disponibles avant 1996");
         }
       } catch (error) {
         console.error("Error fetching APOD:", error);
@@ -312,9 +294,7 @@ export default {
     },*/
     async fetchDB() {
       try {
-        console.log(
-          `/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`
-        );
+        console.log(`/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`);
         const response = await axios.get(
           `https://api.ext.abzk.fr/search/${this.dayFromURL}/${this.monthFromURL_before}/${this.yearFromURL}`
         );
@@ -350,8 +330,7 @@ export default {
       :couleur="secondaryColor"
       :year="yearFromURL"
       :day="dayFromURL"
-      :month="monthFromURL"
-    />
+      :month="monthFromURL" />
   </div>
   <!--Timer-->
   <c-timer
@@ -359,35 +338,20 @@ export default {
     :day="dayFromURL"
     :month="monthFromURL_before"
     :couleur="secondaryColor"
-    class="e-id__timer"
-  />
+    class="e-id__timer" />
   <!--Fleurs de filtrage-->
   <div class="e-id__fleurs">
     <div class="e-id__fleurs --semieronde2">
-      <fleur_semieronde2
-        id="1"
-        @click="toggleBool('naza', 'false')"
-        :couleur="secondaryColor"
-      />
+      <fleur_semieronde2 id="1" @click="toggleBool('naza', 'false')" :couleur="secondaryColor" />
     </div>
     <div class="e-id__fleurs --pointue">
-      <fleur_pointue
-        id="2"
-        @click="toggleBool('story', 'false')"
-        :couleur="secondaryColor"
-      />
+      <fleur_pointue id="2" @click="toggleBool('story', 'false')" :couleur="secondaryColor" />
     </div>
     <div class="e-id__fleurs --semieronde">
-      <fleur_semieronde
-        id="3"
-        @click="toggleBool('cinema', 'false')"
-        :couleur="secondaryColor"
-      />
+      <fleur_semieronde id="3" @click="toggleBool('cinema', 'false')" :couleur="secondaryColor" />
     </div>
   </div>
-  <p class="histoire__ctnSubtitle --title">
-    Cliquez sur les fleurs pour filtrer les données
-  </p>
+  <p class="histoire__ctnSubtitle --title">Cliquez sur les fleurs pour filtrer les données</p>
 
   <!--Picture of the day-->
   <div v-if="apodData && nazaBool" class="APOD">
@@ -396,10 +360,7 @@ export default {
       <h1 class="APOD__title">Image of the day</h1>
       <h3 class="APOD__name">
         <a
-          :href="
-            'https://www.google.com/search?q=' +
-            encodeURIComponent(apodData.title)
-          "
+          :href="'https://www.google.com/search?q=' + encodeURIComponent(apodData.title)"
           target="_blank"
           >{{ apodData.title }}</a
         >
@@ -412,49 +373,34 @@ export default {
   <!--Events DB-->
   <div>
     <div v-if="history && storyBool" class="histoire">
-      <h1 class="histoire__ctnTitle">
-        Ce qu'il s'est passé le jour de votre naissance
-      </h1>
+      <h1 class="histoire__ctnTitle">Ce qu'il s'est passé le jour de votre naissance</h1>
       <p class="histoire__ctnSubtitle">Faites défilez horizontalement</p>
       <div class="scroll__container">
         <div v-for="event in history" :key="event.id" class="scroll__item">
-          <div
-            style="display: flex; justify-content: flex-end; position: relative"
-          >
+          <div style="display: flex; justify-content: flex-end; position: relative">
             <svg
               style="position: absolute; top: 50%; transform: translateY(-50%)"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1380.5 144.22"
-            >
+              viewBox="0 0 1380.5 144.22">
               <path
                 class="cls-1"
                 d="M12.52,80.1c25.87-30.14,61.5-49.9,100.86-55.58,43.34-6.25,83.95,6.07,121.81,26.54,41.54,22.46,82.35,45.53,126.45,62.79,43.77,17.14,90.04,28.85,137.19,30.22,98.6,2.86,191.3-38.75,283.79-66.94,49.28-15.02,99.12-28.11,149-41.01,48.38-12.51,99.32-28.06,149.71-19.1,44.81,7.96,84.41,31.58,125.39,50.02,20.67,9.3,41.68,17.43,64.13,21.19,23.15,3.88,46.62,4.08,69.87.93,11.67-1.58,23.16-3.99,34.49-7.15,9.28-2.59,5.34-17.07-3.99-14.46-46.7,13.03-95.3,11.62-140.45-6.42-41.86-16.73-80.59-41.04-124.13-53.58-48.64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
-                :fill="secondaryColor"
-              />
+                :fill="secondaryColor" />
             </svg>
             <fleur_pointue
               class="histoire__flower"
               id="2"
               :couleur="secondaryColor"
-              style="width: 300px; height: 300px"
-            />
+              style="width: 300px; height: 300px" />
           </div>
           <div class="histoire__content">
             <div>
               <div class="histoire__subText">
-                <p class="histoire__subText--1">
-                  ... durant l'année {{ event.annee }}
-                </p>
-                <p
-                  class="histoire__subText--2"
-                  v-if="this.yearFromURL - event.annee < 0"
-                >
+                <p class="histoire__subText--1">... durant l'année {{ event.annee }}</p>
+                <p class="histoire__subText--2" v-if="this.yearFromURL - event.annee < 0">
                   vers le moment de vos {{ event.annee - this.yearFromURL }} ans
                 </p>
-                <p
-                  class="histoire__subText--3"
-                  v-if="this.yearFromURL - event.annee > 0"
-                >
+                <p class="histoire__subText--3" v-if="this.yearFromURL - event.annee > 0">
                   mais vous n'étiez pas encore né
                 </p>
               </div>
@@ -472,36 +418,27 @@ export default {
     <p class="movies__ctnSubtitle">Faites défilez horizontalement</p>
     <div class="scroll__container">
       <div v-for="movie in movies" :key="movie.id" class="scroll__item">
-        <div
-          style="display: flex; justify-content: flex-end; position: relative"
-        >
+        <div style="display: flex; justify-content: flex-end; position: relative">
           <svg
             style="position: absolute; top: 50%; transform: translateY(-50%)"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1380.5 144.22"
-          >
+            viewBox="0 0 1380.5 144.22">
             <path
               class="cls-1"
               d="M12.52,80.1c25.87-30.14,61.5-49.9,100.86-55.58,43.34-6.25,83.95,6.07,121.81,26.54,41.54,22.46,82.35,45.53,126.45,62.79,43.77,17.14,90.04,28.85,137.19,30.22,98.6,2.86,191.3-38.75,283.79-66.94,49.28-15.02,99.12-28.11,149-41.01,48.38-12.51,99.32-28.06,149.71-19.1,44.81,7.96,84.41,31.58,125.39,50.02,20.67,9.3,41.68,17.43,64.13,21.19,23.15,3.88,46.62,4.08,69.87.93,11.67-1.58,23.16-3.99,34.49-7.15,9.28-2.59,5.34-17.07-3.99-14.46-46.7,13.03-95.3,11.62-140.45-6.42-41.86-16.73-80.59-41.04-124.13-53.58-48.64-14.01-97.53-6.44-145.72,5.56s-99.67,25.51-149.08,39.72c-48.64,13.99-96.3,30.77-144.52,46.08-46.55,14.78-94.33,27.63-143.34,29.92-97.88,4.58-187.07-38.24-270.38-84.75-20.25-11.3-40.96-22.19-63.33-28.67-19.01-5.51-39.04-8.1-58.82-7.44-39.45,1.31-77.64,15.37-108.17,40.44-7.76,6.37-14.85,13.45-21.39,21.07s4.31,17.95,10.61,10.61h0Z"
-              :fill="secondaryColor"
-            />
+              :fill="secondaryColor" />
           </svg>
           <fleur_semieronde
             class="movies__flower"
             id="2"
             :couleur="secondaryColor"
-            style="width: 300px; height: 300px"
-          />
+            style="width: 300px; height: 300px" />
         </div>
         <div class="movies__content">
           <div>
             <a
-              :href="
-                'https://www.google.com/search?q=' +
-                encodeURIComponent(movie.title)
-              "
-              target="_blank"
-            >
+              :href="'https://www.google.com/search?q=' + encodeURIComponent(movie.title)"
+              target="_blank">
               <p class="movies__title">
                 {{ movie.title }}
               </p>
@@ -517,8 +454,7 @@ export default {
             v-if="getImageUrl(movie.poster_path)"
             :src="getImageUrl(movie.poster_path)"
             alt="Movie Poster"
-            style="width: 60%; height: 60%"
-          />
+            style="width: 60%; height: 60%" />
           <MoviesDB class="movies__logo" />
         </div>
       </div>
@@ -531,14 +467,12 @@ export default {
     :month="monthFromURL_before"
     :day="dayFromURL"
     :couleur="secondaryColor"
-    class="e-id__age"
-  />
+    class="e-id__age" />
 
   <!-- Template HTML -->
   <div class="share">
     <p class="share__txt">
-      Partagez votre jour avec vos amis. Copiez le lien et partagez le où vous
-      voulez.
+      Partagez votre jour avec vos amis. Copiez le lien et partagez le où vous voulez.
     </p>
     <button class="share__btn" @click="copyPageUrl">Copier le lien</button>
     <!-- Ajoutez d'autres boutons pour le partage sur les réseaux sociaux si nécessaire -->
@@ -552,8 +486,7 @@ export default {
       visible: isFilterOpen(),
       animation: isFilterOpen(),
       //inverse: !isFilterOpen(),
-    }"
-  >
+    }">
     <!-- Contenu de la fenêtre -->
     <c-header croix :couleur="secondaryColor" />
     <div class="e-id__trait">
@@ -561,8 +494,7 @@ export default {
         :couleur="secondaryColor"
         :year="yearFromURL"
         :day="dayFromURL"
-        :month="monthFromURL"
-      />
+        :month="monthFromURL" />
     </div>
     <p class="efilter__text">Choisissez une catégorie d’évènement</p>
     <div class="efilter__Blockflowers">
@@ -570,22 +502,19 @@ export default {
         id="5"
         @click="inverserCardOpen(1)"
         class="efilter__flowers"
-        :couleur="secondaryColor"
-      />
+        :couleur="secondaryColor" />
       <fleur_pointue
         id="6"
         @click="inverserCardOpen(2)"
         class="efilter__flowers"
-        :couleur="secondaryColor"
-      />
+        :couleur="secondaryColor" />
     </div>
     <div class="efilter__Blockflowers">
       <fleur_semieronde
         id="7"
         @click="inverserCardOpen(3)"
         class="efilter__flowers"
-        :couleur="secondaryColor"
-      />
+        :couleur="secondaryColor" />
     </div>
   </div>
 
@@ -597,8 +526,7 @@ export default {
     text="Chaque jour, la Naza prend une photo de l'univers. Découvrez celle qui a été prise le jour de votre naissance."
     fleur="semieronde2"
     filterChoice="naza"
-    class="efilter__card"
-  />
+    class="efilter__card" />
   <c-card_filter
     v-else-if="FilterChoice == 'histoire' && card_open"
     :couleur="secondaryColor"
@@ -607,8 +535,7 @@ export default {
     text="Découvrez tout les évènements historiques qui sont arrivés à chacun de vos anniversaire !"
     fleur="pointue"
     filterChoice="story"
-    class="efilter__card"
-  />
+    class="efilter__card" />
   <c-card_filter
     v-else-if="FilterChoice == 'cinema' && card_open"
     :couleur="secondaryColor"
@@ -617,8 +544,7 @@ export default {
     text="Pour chacun de vos anniversaires découvrez les sorties cinéma du jour."
     fleur="semieronde"
     filterChoice="cinema"
-    class="efilter__card"
-  />
+    class="efilter__card" />
 
   <c-footer :couleur="secondaryColor" class="e-id__footer" />
 </template>
