@@ -27,8 +27,6 @@
       <!--Flower desktop-->
       <GiantFlower class="e-propos__flower" :couleur="secondaryColor" />
     </div>
-    <!--Footer-->
-    <c-footer class="e-propos__footer" :couleur="secondaryColor" />
   </div>
 </template>
 

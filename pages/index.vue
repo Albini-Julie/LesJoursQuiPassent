@@ -1,15 +1,14 @@
 <template>
   <!--Vidéo-->
-  <div @click="startVideoPlayback" style="position: relative">
+  <div style="position: relative">
     <div ref="videoContainer" class="video-container">
-      <video ref="videoRef">
+      <video ref="videoRef" autoplay muted>
         <source v-if="video == 'winter'" src="/Fleurs_bleues.mp4" type="video/mp4" />
         <source v-else-if="video == 'spring'" src="/FLEURS_roses.mp4" type="video/mp4" />
         <source v-else-if="video == 'summer'" src="/FLEURS_BLANCHES.mp4" type="video/mp4" />
         <source v-else-if="video == 'automn'" src="/Fleurs_marrons.mp4" type="video/mp4" />
       </video>
     </div>
-    <p class="absolute">Cliquez ici et défillez vers le bas</p>
   </div>
   <div class="intro">
     <!--Fleur de gauche-->
@@ -74,12 +73,6 @@ export default {
       });
     };
 
-    const startVideoPlayback = () => {
-      if (videoRef.value) {
-        videoRef.value.play();
-      }
-    };
-
     //Fonction pour importer les couleurs selon les saisons
     const primaryColor = ref("");
     const secondaryColor = ref("");
@@ -142,7 +135,6 @@ export default {
     return {
       videoContainer,
       videoRef,
-      startVideoPlayback,
       primaryColor,
       secondaryColor,
       video,

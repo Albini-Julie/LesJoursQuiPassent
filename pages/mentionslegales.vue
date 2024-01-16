@@ -19,22 +19,34 @@
       <GiantFlower2 class="e-mentions__flower --2" :couleur="secondaryColor" />
       <!--Text-->
       <div class="e-mentions__Blocktext">
-        <p class="e-mentions__Contenttext">[Adresse de votre site web]</p>
+        <p class="e-mentions__Contenttext" style="text-decoration: underline">
+          Projet "Les Jours Qui Passent" du département MMI de Montbéliard
+        </p>
+        <br />
         <p class="e-mentions__Contenttext">
           4 Pl. Lucien Tharradin, 25200 Montbéliard - Département MMI Montbéliard
         </p>
         <p class="e-mentions__Contenttext">lesjoursquipassent@gmail.com</p>
         <p class="e-mentions__Contenttext">07 60 38 72 51</p>
-        <p class="e-mentions__Contenttext">Responsable de la Publication :</p>
-        <p class="e-mentions__Contenttext">
-          Lilian Chesneau-Ciccarelli et Julie Albini, partie développement du projet
+        <br />
+        <p class="e-mentions__Contenttext" style="text-decoration: underline">
+          Responsable de la Publication :
         </p>
-        <p class="e-mentions__Contenttext">Hébergement du Site :</p>
-        <p class="e-mentions__Contenttext">Infomaniak</p>
-        <p class="e-mentions__Contenttext">Rue Eugène Marziano 25 - 1227 Les Acacias / Genève</p>
-        <p class="e-mentions__Contenttext">Technoparkstrasse 3 - 8406 Winterthur</p>
-        <p class="e-mentions__Contenttext">https://www.infomaniak.com/fr</p>
-        <p class="e-mentions__Contenttext">Propriété Intellectuelle :</p>
+        <br />
+        <p class="e-mentions__Contenttext">
+          Lilian Chesneau-Ciccarelli et Julie Albini, partie développement du projet.
+        </p>
+        <br />
+        <p class="e-mentions__Contenttext" style="text-decoration: underline">
+          Hébergement du Site :
+        </p>
+        <br />
+        <p>Vercel</p>
+        <br />
+        <p class="e-mentions__Contenttext" style="text-decoration: underline">
+          Propriété Intellectuelle :
+        </p>
+        <br />
         <p class="e-mentions__Contenttext">
           L’ensemble du contenu de ce site web, y compris les textes, les graphiques, les logos, les
           images, les clips audio et vidéo, est la propriété du département MMI Montbéliard et est
@@ -48,34 +60,45 @@
     <div class="e-mentions__content --2">
       <!--Text-->
       <div class="e-mentions__Blocktext --2">
-        <p class="e-mentions__Contenttext --top">
+        <p class="e-mentions__Contenttext --top" style="text-decoration: underline">
           Collecte et Utilisation des Données Personnelles :
         </p>
+        <br />
         <p class="e-mentions__Contenttext">
           Veuillez vous référer à notre politique de confidentialité pour des informations
           détaillées sur la collecte et l’utilisation des données personnelles.
         </p>
-        <p class="e-mentions__Contenttext">Liens Externes :</p>
+        <br />
+        <p class="e-mentions__Contenttext" style="text-decoration: underline">Liens Externes :</p>
+        <br />
         <p class="e-mentions__Contenttext --top">
           Ce site web peut contenir des liens vers des sites tiers. Les jours qui passent n’assume
           aucune responsabilité quant au contenu ou aux pratiques de confidentialité de ces sites
           tiers.
         </p>
-        <p class="e-mentions__Contenttext --top">Responsabilité :</p>
+        <br />
+        <p class="e-mentions__Contenttext --top" style="text-decoration: underline">
+          Responsabilité :
+        </p>
+        <br />
         <p class="e-mentions__Contenttext">
+          <br />
           Bien que nous nous efforçons de fournir des informations précises et à jour, Les jours qui
           passent ne garantit pas l’exactitude ni l’exhaustivité du contenu de ce site web. Les
           jours qui passent décline toute responsabilité pour tout dommage résultant de
           l’utilisation de ce site web.
         </p>
-        <p class="e-mentions__Contenttext --top">Modification des Mentions Légales :</p>
+        <p class="e-mentions__Contenttext --top" style="text-decoration: underline">
+          Modification des Mentions Légales :
+        </p>
         <p class="e-mentions__Contenttext --top">
           Les jours qui passent se réserve le droit de modifier ces mentions légales à tout moment.
           Les utilisateurs sont encouragés à consulter régulièrement cette page pour rester informés
           des mises à jour.
         </p>
-        <p class="e-mentions__Contenttext --top">Contact :</p>
-        <p class="e-mentions__Contenttext">
+        <p class="e-mentions__Contenttext --top" style="text-decoration: underline">Contact :</p>
+        <br />
+        <p class="e-mentions__Contenttext" style="margin-bottom: 100px">
           Pour toute question ou demande de renseignements concernant ces mentions légales, veuillez
           nous contacter à lesjoursquipassentcontact@gmail.com.
         </p>
@@ -83,13 +106,10 @@
       <!--Flower desktop-->
       <GiantFlower class="e-mentions__flower" :couleur="secondaryColor" />
     </div>
-
     <div class="e-mentions__littleFlower">
       <FleurSemieronde2 :couleur="secondaryColor" />
       <FleurPointue :couleur="secondaryColor" />
     </div>
-    <!--Footer-->
-    <c-footer class="e-mentions__footer" :couleur="secondaryColor" />
   </div>
 </template>
 
